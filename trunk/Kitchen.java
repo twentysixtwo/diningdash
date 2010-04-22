@@ -7,8 +7,18 @@ public class Kitchen {
 		orders.add(o);
 	}
 	
-	Order removeFromQueue(){
+	Order removeFromGlobalQueue(){
 		return orders.remove();
+	}
+	
+	boolean searchAndRemoveGlobalQueue(Order o){
+		return orders.remove(o);
+	}
+	
+	Order removeFromLocalQueue(){
+		Order o = orders.remove();
+		o.setStatus(true);
+		return o;
 	}
 
 }

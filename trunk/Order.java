@@ -1,35 +1,25 @@
 
 public class Order {
 	String foodName;
-	Float price;
-	int status;	//when status == 1, order is ready
+	double price;
+	boolean status;	//when status == 1, order is ready
 	String comments;
 	
-	Order(String name, Float val, String com){
+	Order(String name, String com){
 		foodName = name;
-		price = val;
 		comments = com;
-		status = 0;
+		status = false;
+		//Need to add some database queries here to set price
+		price = 0.00;
 	}
 	
-	String getFoodName(){
-		return foodName;
-	}
+	String getFoodName(){return foodName;}
 	
-	Float getPrice(){
-		return price;
-	}
+	double getPrice(){return price;}
 	
-	String getComment(){
-		return comments;
-	}
+	String getComment(){return comments;}
 	
-	void setStatus(int i){
-		status = i;
-	}
-	
-	int getStatus(){
-		return status;
-	}
+	void setStatus(boolean i){status = i;}
+	boolean getStatus(){return status;}
 
 }
