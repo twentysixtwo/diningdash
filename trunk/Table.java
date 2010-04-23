@@ -12,6 +12,7 @@ public class Table {
 		maxSeat = maxSeated;
 		status = "GREEN";
 		tableWaiter = w;
+		tableBill = new Bill(w, tableNumber, this);
 	}
 
 	int setTable(int num_Diners){

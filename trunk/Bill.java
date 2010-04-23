@@ -1,22 +1,64 @@
 import java.util.LinkedList;
 
+/**
+ * The bill class contains a linked list of orders. It is the bill associated with a table.
+ * @author Henry
+ *
+ */
 
 public class Bill {
+	
+	/**
+	 * A linked list of orders.
+	 */
 	private LinkedList<Order> orders;
-	private Boolean isCooked;	//indicates if it's ready or not
+	
+	/**
+	 * Indicates if all the orders are finished or not. When all orders are done, will notify a waiter
+	 */
+	private Boolean isCooked;
+	
+	/**
+	 * The tab of the table. Contains the sum of the prices of each order.
+	 */
 	private double tab;
-	private int tableNumber;
+	
+	/**
+	 * A reference to the waiter of the table.
+	 */
 	private Waiter itsWaiter;
+	
+	/**
+	 * The number of people sitting at the table.
+	 */
 	private int numOfPeople;
 	
-	Bill(Waiter waiterName, int tableNum){
+	/**
+	 * A reference to the table the bill belongs to
+	 */
+	private Table itsTable;
+	
+	/**
+	 * Default constructor of the bill.
+	 * @param waiterName The waiter of the table.
+	 * @param t A reference to the table the bill belongs to.
+	 */
+	Bill(Waiter waiterName, Table t){
 		itsWaiter = waiterName;
-		tableNumber = tableNum;
+		itsTable = t;
 		isCooked = false;
 	}
 	
+	/**
+	 * Adds an order to the bill. Will get the price of the order and automatically
+	 * add it to the tab of the bill. Additionally, it will place the order into the
+	 * global kitchen queue to be cooked.
+	 * 
+	 * @param name The name of the food being added to the bill
+	 * @param comment Any comment regarding the order being place
+	 */
 	void addOrder(String name, String comment){
-		Order o = new Order(name, comment);
+		Order o = new Order(name, comment, this);
 		tab += o.getPrice();
 		orders.add(o);
 		DataKeeper.globalKitchen.addToQueue(o);
@@ -27,8 +69,8 @@ public class Bill {
 	 * find it in the global queue, either one of the arguments is incorrect, or
 	 * it is not in the queue anymore (which may suggest a cook is working on it).
 	 * 
-	 * @param name
-	 * @param comment
+	 * @param name The name of the order to remove
+	 * @param comment The comment of the order it wants to remove
 	 * @return Returns false if it is not in the global queue. Returns false if it 
 	 * cannot find it in the order. Returns true if it removes from both the global queue and the order.
 	 */
@@ -40,10 +82,22 @@ public class Bill {
 		return (orders.remove(o));
 	}
 	
+	/**
+	 * Returns the status of the bill, indicating if all orders are completed or not.
+	 * @return A boolean value indicating if all orders are completed or not.
+	 */
 	Boolean getStatus(){return isCooked;}
 	
+	/**
+	 * Sets the status of the bill.
+	 * @param b A boolean value indicating if all orders are complete or not.
+	 */
 	void setStatus(Boolean b){isCooked = b;}
 	
+	/**
+	 * Returns the tab of the order.
+	 * @return The tab of the order as a double.
+	 */
 	double returnTab(){return tab;}
 		
 }
