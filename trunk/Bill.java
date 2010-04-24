@@ -39,11 +39,21 @@ public class Bill {
 	private Table itsTable;
 	
 	/**
+	 * The time the customers are seated.
+	 */
+	private long startTime;
+	
+	/**
+	 * The time the customers finished.
+	 */
+	private long endTime;
+	
+	/**
 	 * Default constructor of the bill.
 	 * @param waiterName The waiter of the table.
 	 * @param t A reference to the table the bill belongs to.
 	 */
-	Bill(Waiter waiterName, Table t){
+	public Bill(Waiter waiterName, Table t){
 		itsWaiter = waiterName;
 		itsTable = t;
 		isCooked = false;
@@ -57,7 +67,7 @@ public class Bill {
 	 * @param name The name of the food being added to the bill
 	 * @param comment Any comment regarding the order being place
 	 */
-	void addOrder(String name, String comment){
+	public void addOrder(String name, String comment){
 		Order o = new Order(name, comment, this);
 		tab += o.getPrice();
 		orders.add(o);
@@ -74,7 +84,7 @@ public class Bill {
 	 * @return Returns false if it is not in the global queue. Returns false if it 
 	 * cannot find it in the order. Returns true if it removes from both the global queue and the order.
 	 */
-	boolean removeOrder(String name, String comment){
+	public boolean removeOrder(String name, String comment){
 		Order o = new Order(name, comment);
 		if(DataKeeper.globalKitchen.searchAndRemoveGlobalQueue(o) == false)
 			return false;
@@ -86,18 +96,40 @@ public class Bill {
 	 * Returns the status of the bill, indicating if all orders are completed or not.
 	 * @return A boolean value indicating if all orders are completed or not.
 	 */
-	Boolean getStatus(){return isCooked;}
+	public Boolean getStatus(){return isCooked;}
 	
 	/**
 	 * Sets the status of the bill.
 	 * @param b A boolean value indicating if all orders are complete or not.
 	 */
-	void setStatus(Boolean b){isCooked = b;}
+	public void setStatus(Boolean b){isCooked = b;}
 	
 	/**
 	 * Returns the tab of the order.
 	 * @return The tab of the order as a double.
 	 */
-	double returnTab(){return tab;}
+	public double returnTab(){return tab;}
+	
+	/**
+	 * Sets the startTime to the current time (in milliseconds).
+	 */
+	public void setStartTime(){startTime = System.currentTimeMillis();}
+	
+	/**
+	 * Gets the start time (in milliseconds).
+	 * @return The startTime as a long.
+	 */
+	public long getStartTime(){return startTime;}
+	
+	/**
+	 * Sets the endTime to the current time (in milliseconds).
+	 */
+	public void setEndTime(){endTime = System.currentTimeMillis();}
+	
+	/**
+	 * Gets the end time (in milliseconds).
+	 * @return The endTime as a long.
+	 */
+	public long getEndTime(){return endTime;}
 		
 }
