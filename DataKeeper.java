@@ -11,12 +11,14 @@ public class DataKeeper {
 	/**
 	 * Contains the global kitchen queue to be accessed by the chefs.
 	 */
-	private static Kitchen globalKitchen;
+	static Kitchen globalKitchen;
 	
 	/**
 	 * Contains the map of the restaurant.
 	 */
 	private static Map restaurantMap;
+	
+	static RecordKeeper restaurantRecord;
 	
 	/**
 	 * Default constructor for DataKeeper. Will instantiate a new kitchen and map object.

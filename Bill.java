@@ -85,7 +85,7 @@ public class Bill {
 	 * cannot find it in the order. Returns true if it removes from both the global queue and the order.
 	 */
 	public boolean removeOrder(String name, String comment){
-		Order o = new Order(name, comment);
+		Order o = new Order(name, comment, this);
 		if(DataKeeper.globalKitchen.searchAndRemoveGlobalQueue(o) == false)
 			return false;
 		tab -= o.getPrice();
