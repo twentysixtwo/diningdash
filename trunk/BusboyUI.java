@@ -3,6 +3,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
 import java.io.IOException;
+import java.util.LinkedList;
 
 /** 
  * The BusboyUI class displays the busboy window which shows the map of the tables for the restaurant and their respective
@@ -47,31 +48,46 @@ public class BusboyUI extends JFrame{
 		
 		busboyName = new String("Busboy "+name);
 		
-		MAX_ROWS = 3;
-		MAX_COLUMNS = 3;
+		// Size of restaurant is determined by the TotalRows and TotalCols field in DataKeeper's restaurantMap
+		// To change size, adjust the constructor of Map class
+		MAX_ROWS = new DataKeeper().restaurantMap.getTotalRows();
+		MAX_COLUMNS = new DataKeeper().restaurantMap.getTotalCols();
 		
 		gridPanel = new JPanel(new GridLayout(MAX_ROWS,MAX_COLUMNS));
 		
 		JButton tableButton;
 		tableNumber = 1;
+		
+		LinkedList<Table> tableList = new DataKeeper().getTables();
+		Table t = tableList.pop();
 			
 		for(y=0;y<MAX_ROWS;y++)
 		{
 			for(x=0;x<MAX_COLUMNS;x++)
 			{
-				tableButton = new JButton(((Integer)tableNumber).toString());
-				tableButton.setBackground(Color.red);
-				
-				tableButton.addActionListener(new ActionListener(){
-					public void actionPerformed(ActionEvent e){
-						selectedButton = (JButton)e.getSource();
-						if(selectedButton.getBackground() != Color.gray)
-						{
-							tableNumber = Integer.parseInt(selectedButton.getText());
-							System.out.println("Table number is "+tableNumber);
-						}
-					}
-				});
+				if( (t.getPosRow() == y) && (t.getPosCol() == x)){
+					tableButton = new JButton((t.getTableNumber()).toString());
+					tableButton.setBackground(Color.red);
+					
+					tableButton.addActionListener(new ActionListener(){
+						public void actionPerformed(ActionEvent e){
+							selectedButton = (JButton)e.getSource();
+							if(selectedButton.getBackground() != Color.gray)
+							{
+								tableNumber = Integer.parseInt(selectedButton.getText());
+								System.out.println("Table number is "+tableNumber);
+							}
+							}
+					});
+					
+					try {t = tableList.pop();}
+					catch (Exception e){System.out.println("All tables are added to the map");}
+				} //End of if
+				else{
+					tableButton = new JButton();
+					tableButton.setBackground(Color.gray);
+				}
+			;
 				
 				tableNumber++;
 				

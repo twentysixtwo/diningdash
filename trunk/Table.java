@@ -1,18 +1,22 @@
 
 public class Table {
-	private int tableNumber;
+	private Integer tableNumber;
 	private Waiter tableWaiter;
 	private String status;
 	private Bill tableBill;
 	private int maxSeat;
 	private int numSeated;
+	private int positionRow;
+	private int positionCol;
 	
-	Table(int tableNum, int maxSeated, Waiter w){
+	Table(int tableNum, int maxSeated, Waiter w, int posR, int posC){
 		tableNumber = tableNum;
 		maxSeat = maxSeated;
 		status = "GREEN";
 		tableWaiter = w;
 		tableBill = new Bill(w, this);
+		positionRow = posR;
+		positionCol = posC;
 	}
 
 	int setTable(int num_Diners){
@@ -25,7 +29,7 @@ public class Table {
 	}
 	
 	void setTableNumber(int i){tableNumber = i;}
-	int getTableNumber(){return tableNumber;}
+	Integer getTableNumber(){return tableNumber;}
 		
 	Bill returnBill(){return tableBill;}
 	
@@ -40,5 +44,13 @@ public class Table {
 			numSeated = 0;
 			DataKeeper.restaurantRecord.sendBill(tableBill);
 			return 1;
+	}
+	
+	int getPosRow(){
+		return positionRow;
+	}
+	
+	int getPosCol(){
+		return positionCol;
 	}
 }
