@@ -11,14 +11,14 @@ public class DataKeeper {
 	/**
 	 * Contains the global kitchen queue to be accessed by the chefs.
 	 */
-	static Kitchen globalKitchen;
+	public static Kitchen globalKitchen;
 	
 	/**
 	 * Contains the map of the restaurant.
 	 */
-	private static Map restaurantMap;
+	public static Map restaurantMap;
 	
-	static RecordKeeper restaurantRecord;
+	public static RecordKeeper restaurantRecord;
 	
 	/**
 	 * Default constructor for DataKeeper. Will instantiate a new kitchen and map object.
@@ -32,10 +32,8 @@ public class DataKeeper {
 	 * Generates a linked list of tables to return.
 	 * @return A list of tables as a linked list.
 	 */
-	public LinkedList getTables(){
-		LinkedList<Table> listOfTables = new LinkedList<Table>();
-		//Fill out more stuff here
-		return listOfTables;
+	public LinkedList<Table> getTables(){
+		return restaurantMap.getTableList();
 	}
 
 }

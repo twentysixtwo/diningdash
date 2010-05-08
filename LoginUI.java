@@ -133,7 +133,7 @@ public class LoginUI extends JPanel{
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		main.setLocation(dim.width/2-140,dim.height/2-85);
 		
-		main.setContentPane(new LoginUI());
+		main.setContentPane(new BusboyUI(new LoginUI(), "Henry"));
 		main.pack();
 		
 		main.setVisible(true);
