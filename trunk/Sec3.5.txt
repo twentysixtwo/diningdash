@@ -1,7 +1,0 @@
-Sec 3.5 - Access Privileges / Security
-
-In order to secure our system, each terminal requires a login before any functions can be accessed. The list of authorized users (employees) and their passwords are stored in a plaintext list in the database. The information could also be put through various encryption methods in order to secure the plaintext further. 
-
-Upon successful login, each user also has an account type associated with them. At this point, the system pulls the account type and displays the appropriate interface. In this way, the user can only access systems and functions that their type is authorized to access. 
-
-The system should also be mindful of the time a user is logged in at. If not during hours of operation, the system should not allow lower level users log in. If a user is logged in for a long period of time without accessing any functions, the system should automatically log out the terminal.  
