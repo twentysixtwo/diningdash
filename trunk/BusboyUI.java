@@ -67,7 +67,7 @@ public class BusboyUI extends JFrame{
 			{
 				if( (t.getPosRow() == y) && (t.getPosCol() == x)){
 					tableButton = new JButton((t.getTableNumber()).toString());
-					tableButton.setBackground(Color.red);
+					tableButton.setBackground(t.getStatus());
 					
 					tableButton.addActionListener(new ActionListener(){
 						public void actionPerformed(ActionEvent e){
@@ -132,7 +132,6 @@ public class BusboyUI extends JFrame{
 	 * 
 	 */
 	public void cleanTable(){
-		selectedButton = (JButton)gridPanel.getComponent(tableNumber-1);
 		if(selectedButton.getBackground() == Color.red)
 		{
 			selectedButton.setBackground(Color.green);

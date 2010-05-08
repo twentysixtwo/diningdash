@@ -1,8 +1,9 @@
+import java.awt.Color;
 
 public class Table {
 	private Integer tableNumber;
 	private Waiter tableWaiter;
-	private String status;
+	private Color status;
 	private Bill tableBill;
 	private int maxSeat;
 	private int numSeated;
@@ -12,7 +13,7 @@ public class Table {
 	Table(int tableNum, int maxSeated, Waiter w, int posR, int posC){
 		tableNumber = tableNum;
 		maxSeat = maxSeated;
-		status = "GREEN";
+		status = Color.green;
 		tableWaiter = w;
 		tableBill = new Bill(w, this);
 		positionRow = posR;
@@ -21,7 +22,7 @@ public class Table {
 
 	int setTable(int num_Diners){
 		if (num_Diners <= maxSeat){
-			status = "YELLOW";
+			status = Color.yellow;
 			return 1;
 		}
 		else 
@@ -33,14 +34,14 @@ public class Table {
 		
 	Bill returnBill(){return tableBill;}
 	
-	void setStatus(String stat){status = stat;}
-	String getStatus(){return status;}
+	void setStatus(Color stat){status = stat;}
+	Color getStatus(){return status;}
 	
 	void setMaxSeat(int i){maxSeat = i;}
 	int getMaxSeat(){return maxSeat;}
 	
 	int cleanedTable(){
-			status = "GREEN";
+			status = Color.green;
 			numSeated = 0;
 			DataKeeper.restaurantRecord.sendBill(tableBill);
 			return 1;
