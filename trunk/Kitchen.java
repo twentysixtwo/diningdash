@@ -17,7 +17,7 @@ public class Kitchen {
 	
 	Order removeFromLocalQueue(){
 		Order o = orders.remove();
-		o.setStatus(true);
+		o.setStatusDone();
 		return o;
 	}
 

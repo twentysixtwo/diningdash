@@ -356,9 +356,12 @@ public class RecordKeeper {
 	 * @param username  Username of the employee
 	 * @return The Account to be returned
 	 */
+	
 	Account accountData(String username){
-		Account temp=new Account();
-		return temp;
+		//Account temp= new Account();
+		//TODO Write a method to search for accounts and return its type
+		//return temp;
+		return null;
 	}
 	
 	/**
@@ -370,8 +373,10 @@ public class RecordKeeper {
 	 * @return The Account to be returned
 	 */
 	Account dailyAccountData(String date, String username){
-		Account temp=new Account();
-		return temp;
+		//Account temp=new Account();
+		//TODO Write a method to search for the account and date
+		//return temp;
+		return null;
 	}
 
 	/**
@@ -425,19 +430,9 @@ public class RecordKeeper {
 	boolean removeTable(int tableNum){
 		return true;
 	}
-}
 
 
-
-
-
-
-class Account{
-	
-}
-class Bill{
-
-}
-class Food{
-	
+	public void sendBill(Bill tableBill) {
+		// TODO Auto-generated method stub
+	}
 }

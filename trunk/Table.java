@@ -12,7 +12,7 @@ public class Table {
 		maxSeat = maxSeated;
 		status = "GREEN";
 		tableWaiter = w;
-		tableBill = new Bill(w, tableNumber, this);
+		tableBill = new Bill(w, this);
 	}
 
 	int setTable(int num_Diners){
@@ -38,7 +38,7 @@ public class Table {
 	int cleanedTable(){
 			status = "GREEN";
 			numSeated = 0;
-			DataKeeper.recordKeeper.sendBill(tableBill);
+			DataKeeper.restaurantRecord.sendBill(tableBill);
 			return 1;
 	}
 }
