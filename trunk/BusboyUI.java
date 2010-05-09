@@ -31,6 +31,7 @@ public class BusboyUI extends JFrame{
 	int MAX_COLUMNS;
 	
 	int tableNumber;
+	LinkedList<Table> tableList = new DataKeeper().getTables();
 	
 	String busboyName;
 	
@@ -50,15 +51,14 @@ public class BusboyUI extends JFrame{
 		
 		// Size of restaurant is determined by the TotalRows and TotalCols field in DataKeeper's restaurantMap
 		// To change size, adjust the constructor of Map class
-		MAX_ROWS = new DataKeeper().restaurantMap.getTotalRows();
-		MAX_COLUMNS = new DataKeeper().restaurantMap.getTotalCols();
+		MAX_ROWS = DataKeeper.restaurantMap.getTotalRows();
+		MAX_COLUMNS = DataKeeper.restaurantMap.getTotalCols();
 		
 		gridPanel = new JPanel(new GridLayout(MAX_ROWS,MAX_COLUMNS));
 		
 		JButton tableButton;
 		tableNumber = 1;
 		
-		LinkedList<Table> tableList = new DataKeeper().getTables();
 		Table t = tableList.pop();
 			
 		for(y=0;y<MAX_ROWS;y++)
@@ -136,6 +136,11 @@ public class BusboyUI extends JFrame{
 		{
 			selectedButton.setBackground(Color.green);
 			System.out.println("Table "+tableNumber+" is clean");
+			for(Table t : tableList){
+				if(t.getTableNumber() == tableNumber){
+					t.cleanedTable();
+				}
+			}
 		}
 	}
 	

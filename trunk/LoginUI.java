@@ -109,6 +109,32 @@ public class LoginUI extends JPanel{
 		System.out.println("Username: "+nameField.getText());
 		System.out.println("Password: "+passwordField.getText());
 		
+		int accType = RecordKeeper.login(nameField.getText(), passwordField.getText());
+		switch (accType){
+			case 1: {
+				System.out.println("Hello " + nameField.getText());
+				System.out.println("Password verified");
+				BusboyUI busboyWindow = new BusboyUI(this,nameField.getText());
+				break;
+			}
+			case 2: {
+				System.out.println("Hello " + nameField.getText());
+				System.out.println("Password verified");
+				break;
+			}
+			case 3:{
+				System.out.println("Hello " + nameField.getText());
+				System.out.println("Password verified");
+				WaiterUI waiterWindow = new WaiterUI(this, nameField.getText());
+				break;
+			}
+			default: {
+				System.out.println("Invalid login");
+			}
+			
+		}
+		
+		/*
 		if(RecordKeeper.checkUsername(nameField.getText()))
 		{
 			System.out.println("Hello " + nameField.getText());
@@ -116,13 +142,13 @@ public class LoginUI extends JPanel{
 			if(RecordKeeper.checkPassword(passwordField.getText()))
 			{
 				System.out.println("Password verified");
-				
 				BusboyUI busboyWindow = new BusboyUI(this,nameField.getText());
 				
 				nameField.setText("");
 				passwordField.setText("");
 			}
 		}
+		*/
 	}
 	
 	public static void main(String[] args) {

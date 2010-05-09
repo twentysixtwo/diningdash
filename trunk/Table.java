@@ -34,17 +34,25 @@ public class Table {
 		
 	Bill returnBill(){return tableBill;}
 	
-	void setStatus(Color stat){status = stat;}
+	void setStatus(Color stat){
+		status = stat;
+		DataKeeper.updatesTableInDatabase(this);
+	}
 	Color getStatus(){return status;}
 	
-	void setMaxSeat(int i){maxSeat = i;}
-	int getMaxSeat(){return maxSeat;}
+	void setNumSeat(int i){
+		if(numSeated <= maxSeat) numSeated = i;
+		else numSeated = -1;
+		DataKeeper.updatesTableInDatabase(this);
+	}
+	int getNumSeat(){return numSeated;}
 	
 	int cleanedTable(){
-			status = Color.green;
-			numSeated = 0;
-			DataKeeper.restaurantRecord.sendBill(tableBill);
-			return 1;
+		status = Color.green;
+		numSeated = 0;
+		DataKeeper.restaurantRecord.sendBill(tableBill);
+		DataKeeper.updatesTableInDatabase(this);
+		return 1;
 	}
 	
 	int getPosRow(){

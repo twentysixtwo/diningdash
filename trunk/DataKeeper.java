@@ -35,5 +35,9 @@ public class DataKeeper {
 	public LinkedList<Table> getTables(){
 		return restaurantMap.getTableList();
 	}
+	
+	public static void updatesTableInDatabase(Table t){
+		RecordKeeper.updatesTable(t);
+	}
 
 }

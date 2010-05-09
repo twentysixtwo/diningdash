@@ -389,9 +389,13 @@ public class RecordKeeper {
 	 * @param password  The password used to log in
 	 * @return Returns 0 if the login information is incorrect,
 	 * otherwise returns the number corresponding to the account type.
+	 * 
+	 * Account type 1 = Busboy
+	 * Account type 2 = Host
+	 * Account type 3 = Waiter
 	 */
-	int login(String username, String password){
-		return 0;
+	static int login(String username, String password){
+		return 3;
 	}
 	
 	/**
@@ -445,5 +449,12 @@ public class RecordKeeper {
 	public static boolean checkPassword(String s){
 		//Insert an if statement to query the database for the password. Return true if it is found.
 		return true;
+	}
+	
+	public static void updatesTable(Table t){
+		/*
+		 * Queries the database by the table number of t. Then updates the record in the database with
+		 * the new t.
+		 */
 	}
 }
