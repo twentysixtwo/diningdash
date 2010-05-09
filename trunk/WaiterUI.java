@@ -111,17 +111,17 @@ public class WaiterUI extends JFrame{
 			}
 		});
 		
-		JButton placeOrderButton = new JButton("Add to Order");
-		logoutButton.addActionListener(new ActionListener(){
+		JButton placeOrderButton = new JButton("Add Order");
+		placeOrderButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				//placeOrder();
 			}
 		});
 		
 		JButton setDirtyButton = new JButton("Dirty Table");
-		logoutButton.addActionListener(new ActionListener(){
+		setDirtyButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				//setDirty();
+				setDirty();
 			}
 		});
 
@@ -144,7 +144,7 @@ public class WaiterUI extends JFrame{
 		JScrollPane scrollPane = new JScrollPane(tableOrder,
 			ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 			ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setMinimumSize(new Dimension(280, 250));
+		scrollPane.setMinimumSize(new Dimension(250, 250));
 		infoPanel.add(scrollPane, orderC);
 		
 		GridBagConstraints placeOrderC = new GridBagConstraints();
@@ -176,5 +176,17 @@ public class WaiterUI extends JFrame{
 	public void logout(){
 		opener.setVisible(true);
 		this.dispose();
+	}
+	
+	private void setDirty(){
+		if(selectedButton.getBackground() == Color.yellow){
+			selectedButton.setBackground(Color.red);
+			System.out.println("Table "+tableNumber+" is dirty");
+			for(Table t : tableList){
+				if(t.getTableNumber() == tableNumber){
+					t.setStatus(Color.red);
+				}
+			}
+		}
 	}
 }
