@@ -109,11 +109,11 @@ public class LoginUI extends JPanel{
 		System.out.println("Username: "+nameField.getText());
 		System.out.println("Password: "+passwordField.getText());
 		
-		if(nameField.getText().equals("Kalev"))
+		if(RecordKeeper.checkUsername(nameField.getText()))
 		{
-			System.out.println("Hello Kalev");
+			System.out.println("Hello " + nameField.getText());
 			
-			if(passwordField.getText().equals("openseasame"))
+			if(RecordKeeper.checkPassword(passwordField.getText()))
 			{
 				System.out.println("Password verified");
 				
@@ -133,7 +133,7 @@ public class LoginUI extends JPanel{
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		main.setLocation(dim.width/2-140,dim.height/2-85);
 		
-		main.setContentPane(new BusboyUI(new LoginUI(), "Henry"));
+		main.setContentPane(new LoginUI());
 		main.pack();
 		
 		main.setVisible(true);
