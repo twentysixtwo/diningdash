@@ -131,5 +131,9 @@ public class Bill {
 	 * @return The endTime as a long.
 	 */
 	public long getEndTime(){return endTime;}
+	
+	public LinkedList<Order> getOrders(){
+		return orders;
+	}
 		
 }
