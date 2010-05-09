@@ -435,4 +435,15 @@ public class RecordKeeper {
 	public void sendBill(Bill tableBill) {
 		// TODO Auto-generated method stub
 	}
+	
+	public static boolean checkUsername(String s){
+		// Insert an if statement to query the database for the user name. Return true if it is found.
+		return true;
+		
+	}
+	
+	public static boolean checkPassword(String s){
+		//Insert an if statement to query the database for the password. Return true if it is found.
+		return true;
+	}
 }

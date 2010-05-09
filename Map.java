@@ -35,6 +35,7 @@ public class Map {
 		Table t5 = new Table(5, 4, null, 5, 1);
 			resturantTables.add(t5);
 		Table t6 = new Table(6, 4, null, 5, 3);
+		t6.setStatus(Color.red);
 			resturantTables.add(t6);
 	}
 	
