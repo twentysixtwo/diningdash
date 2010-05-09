@@ -1,16 +1,15 @@
 import javax.swing.*;
-
 import java.awt.event.*;
 import java.awt.*;
-import java.io.IOException;
 import java.util.LinkedList;
 
 /**
- * WaiterUI is the userinterface for the waiter.
- * @author henry
+ * WaiterUI is the user interface for the waiter.
+ * @author Henry Chao
  *
  */
 
+@SuppressWarnings("serial")
 public class WaiterUI extends JFrame{
 
 	/**
@@ -45,7 +44,7 @@ public class WaiterUI extends JFrame{
 		opener.setVisible(false);
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		
-		waiterName = new String("Busboy "+name);
+		waiterName = new String("Waiter "+name);
 		
 		// Size of restaurant is determined by the TotalRows and TotalCols field in DataKeeper's restaurantMap
 		// To change size, adjust the constructor of Map class
@@ -60,7 +59,8 @@ public class WaiterUI extends JFrame{
 		tableOrder.setEditable(false);
 		
 		tableNumber = 1;
-		Table t = tableList.pop();
+		int index = 0;
+		Table t = tableList.get(index++);
 			
 		for(y=0;y<MAX_ROWS;y++)
 		{
@@ -99,7 +99,7 @@ public class WaiterUI extends JFrame{
 						}
 					});
 					
-					try {t = tableList.pop();}
+					try {t = tableList.get(index++);}
 					catch (Exception e){System.out.println("All tables are added to the map");}
 				} //End of if
 				else{
@@ -127,14 +127,14 @@ public class WaiterUI extends JFrame{
 		JButton placeOrderButton = new JButton("Add Order");
 		placeOrderButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				//placeOrder();
+				placeOrder();
 			}
 		});
 		
-		JButton setDirtyButton = new JButton("Dirty Table");
+		JButton setDirtyButton = new JButton("Toggle Dirty");
 		setDirtyButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				setDirty();
+				toggleDirty();
 			}
 		});
 
@@ -191,7 +191,7 @@ public class WaiterUI extends JFrame{
 		this.dispose();
 	}
 	
-	private void setDirty(){
+	private void toggleDirty(){
 		if(selectedButton.getBackground() == Color.yellow){
 			selectedButton.setBackground(Color.red);
 			System.out.println("Table "+tableNumber+" is dirty");
@@ -201,5 +201,27 @@ public class WaiterUI extends JFrame{
 				}
 			}
 		}
+		else if(selectedButton.getBackground() == Color.red){
+			selectedButton.setBackground(Color.yellow);
+			System.out.println("Table "+tableNumber+" is occupied");
+			for(Table t : tableList){
+				if(t.getTableNumber() == tableNumber){
+					t.setStatus(Color.yellow);
+				}
+			}
+		}
+	}
+	
+	private void placeOrder(){
+		Bill b = null;
+		for(Table t : tableList){
+			if(t.getTableNumber() == tableNumber){
+				b = t.getTableBill();
+			}
+		}
+		if(b!= null){
+			b.addOrder("Fried Fish", "No comment");
+		}
+		else System.out.println("Order not placed");
 	}
 }
