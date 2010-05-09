@@ -70,8 +70,12 @@ public class Bill {
 	public void addOrder(String name, String comment){
 		Order o = new Order(name, comment, this);
 		tab += o.getPrice();
-		orders.add(o);
-		DataKeeper.globalKitchen.addToQueue(o);
+		try{
+			orders.add(o);
+			DataKeeper.globalKitchen.addToQueue(o);
+			System.out.println("Order placed");
+		}
+		catch (Exception e){System.out.println("Cannot add order to bill");}
 	}
 	
 	/**

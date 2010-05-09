@@ -52,7 +52,7 @@ public class Order {
 	public Order(String name, String com, Bill b){
 		foodName = name;
 		comments = com;
-		itsBill = b;
+		//itsBill = b;
 		status = false;
 		//Need to add some database queries here to set price
 		price = 0.00;
