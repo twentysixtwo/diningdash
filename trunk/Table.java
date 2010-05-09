@@ -62,4 +62,8 @@ public class Table {
 	int getPosCol(){
 		return positionCol;
 	}
+	
+	Bill getTableBill(){
+		return tableBill;
+	}
 }

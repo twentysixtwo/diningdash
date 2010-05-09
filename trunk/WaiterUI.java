@@ -70,6 +70,7 @@ public class WaiterUI extends JFrame{
 					tableButton = new JButton((t.getTableNumber()).toString());
 					tableButton.setBackground(t.getStatus());
 					final int seated = t.getNumSeat();
+					final Bill tableBill = t.getTableBill();
 					
 					tableButton.addActionListener(new ActionListener(){
 						public void actionPerformed(ActionEvent e){
@@ -81,7 +82,19 @@ public class WaiterUI extends JFrame{
 								tableInfo.setText("<html>Table " + tableNumber + "<p>" + 
 													"Occupancy: " + seated);
 								tableInfo.setMinimumSize(new Dimension(100, 30));
-								tableOrder.setText("Say what?");
+								
+								String infoText = new String();
+								LinkedList<Order> foodOrders = tableBill.getOrders();
+								if(foodOrders == null){
+									tableOrder.setText("No orders placed");
+								}
+								else{
+									for(Order o:foodOrders){
+										infoText = infoText + o.getFoodName() + '\n' + '\t' +
+												o.getComment() + '\n';
+									}
+									tableOrder.setText(infoText);
+								}
 							}
 						}
 					});
