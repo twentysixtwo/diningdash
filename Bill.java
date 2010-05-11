@@ -73,10 +73,10 @@ public class Bill {
 		tab += o.getPrice();
 		try{
 			orders.add(o);
-			DataKeeper.globalKitchen.addToQueue(o);
+			//DataKeeper.globalKitchen.addToQueue(o);
 			System.out.println("Order placed");
 		}
-		catch (Exception e){System.out.println("Some error occured");}
+		catch (Exception e){System.out.println("Cannot add order");}
 	}
 	
 	/**

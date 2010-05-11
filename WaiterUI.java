@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
 import java.util.LinkedList;
-import java.util.concurrent.SynchronousQueue;
 
 /**
  * WaiterUI is the user interface for the waiter.
@@ -29,14 +28,14 @@ public class WaiterUI extends JFrame{
 	int MAX_COLUMNS;
 	
 	static int tableNumber;
-	static LinkedList<Table> tableList;
-	DataKeeper dk = new DataKeeper();
+	static DataKeeper dk = new DataKeeper();
+	static LinkedList<Table> tableList = dk.getTables();
 	
 	final static JTextArea tableOrder = new JTextArea(20, 25);
 	
 	String waiterName;
 	static String infoText = new String();
-	static Bill b = null;
+	static Bill tableBill = null;
 	
 	/**
 	 * This is the constructor for the BusboyUI class and is called whenever a new waiter window is needed. It generates the
@@ -52,6 +51,9 @@ public class WaiterUI extends JFrame{
 
 		waiterName = new String("Waiter "+ waiterName);
 		
+		dk = new DataKeeper();
+		
+		
 		// Size of restaurant is determined by the TotalRows and TotalCols field in DataKeeper's restaurantMap
 		// To change size, adjust the constructor of Map class
 		MAX_ROWS = DataKeeper.restaurantMap.getTotalRows();
@@ -64,11 +66,10 @@ public class WaiterUI extends JFrame{
 		tableOrder.setEditable(false);
 		tableOrder.setLineWrap(true);
 		
-
-		tableList = new DataKeeper().getTables();
 		tableNumber = 1;
 		int index = 0;
 		Table t = tableList.get(index++);
+		updateOrderView();
 			
 		for(y=0;y<MAX_ROWS;y++)
 		{
@@ -78,11 +79,17 @@ public class WaiterUI extends JFrame{
 					tableButton = new JButton((t.getTableNumber()).toString());
 					tableButton.setBackground(t.getStatus());
 					final int seated = t.getNumSeat();
-					final Bill tableBill = t.getTableBill();
 					
 					tableButton.addActionListener(new ActionListener(){
 						public void actionPerformed(ActionEvent e){
 							selectedButton = (JButton)e.getSource();
+							
+							for(Table t : tableList){
+								if(t.getTableNumber() == tableNumber){
+									tableBill = t.getTableBill();
+								}
+							}
+							
 							if(selectedButton.getBackground() != Color.gray)
 							{
 								tableNumber = Integer.parseInt(selectedButton.getText());
@@ -188,8 +195,6 @@ public class WaiterUI extends JFrame{
 	}
 	
 	private void toggleDirty(){
-		tableList = new DataKeeper().getTables();
-		
 		if(selectedButton.getBackground() == Color.yellow){
 			selectedButton.setBackground(Color.red);
 			System.out.println("Table "+tableNumber+" is dirty");
@@ -213,7 +218,6 @@ public class WaiterUI extends JFrame{
 	private void placeOrder(){
 		Bill b = null;
 		Color tableColor = null;
-		tableList = new DataKeeper().getTables();
 		
 		for(Table t : tableList){
 			if(t.getTableNumber() == tableNumber){
@@ -225,17 +229,15 @@ public class WaiterUI extends JFrame{
 			MenuUI mui = new MenuUI(b);
 		}
 		else System.out.println("Order not placed");
-		
-		updateOrderView();
 	}
 	
 	static void updateOrderView(){
 		for(Table t : tableList){
 			if(t.getTableNumber() == tableNumber){
-				b = t.getTableBill();
+				tableBill = t.getTableBill();
 			}
 		}
-		LinkedList<Order> foodOrders = b.getOrders();
+		LinkedList<Order> foodOrders = tableBill.getOrders();
 		if(foodOrders.size() == 0){
 			tableOrder.setText(null);
 		}
