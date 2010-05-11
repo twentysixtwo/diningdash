@@ -13,7 +13,8 @@ public class RecordKeeper {
 	/**
 	 * Path of the database file
 	 */
-	String databasePath="C:\\Users\\admin\\Documents\\workspace\\restaurant\\RestaurantDatabase.mdb";
+	
+	String databasePath = System.getProperty("user.dir") + "\\src\\RestaurantDatabase.mdb";
 	
 	/**
 	 * Connection to the database file
@@ -35,6 +36,7 @@ public class RecordKeeper {
 	 */
 	void connectToDatabase(){
 		try {
+			System.out.println(databasePath);
             Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
             // set this to a MS Access DB you have on your machine
             String url = "jdbc:odbc:DRIVER={Microsoft Access Driver (*.mdb)};DBQ="+databasePath;
