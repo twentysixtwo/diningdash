@@ -82,8 +82,23 @@ public class MenuUI extends JFrame{
 				catch (Exception e){item = null;}
 			};
 		}
-		
+
 		final JTextField commentField = new JTextField();
+		commentField.setText("Comments:");
+		commentField.addFocusListener(new FocusListener(){
+
+			public void focusGained(FocusEvent arg0) {
+				if(commentField.isFocusOwner()){
+					System.out.println(commentField.getText());
+					if( (commentField.getText()).equals("Comments:"))
+						commentField.setText(" ");
+				}
+			}
+
+			public void focusLost(FocusEvent arg0) {
+			}
+			
+		});
 		gridPanel.add(commentField);
 		
 		JButton addOrderButton = new JButton("Add Order");
