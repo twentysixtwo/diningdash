@@ -36,7 +36,6 @@ public class RecordKeeper {
 	 */
 	void connectToDatabase(){
 		try {
-			System.out.println(databasePath);
             Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
             // set this to a MS Access DB you have on your machine
             String url = "jdbc:odbc:DRIVER={Microsoft Access Driver (*.mdb)};DBQ="+databasePath;
@@ -470,7 +469,9 @@ public class RecordKeeper {
 	 * Account type 2 = Host
 	 * Account type 3 = Waiter
 	 */
-	int login(String username, String password){
+	int login(String username, char[] p){
+		String password = new String(p);
+		System.out.println(password);
 		ResultSet rs;
 		try {
 			Statement s = con.createStatement();
