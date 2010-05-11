@@ -12,7 +12,7 @@ public class Chef extends Account {
 	/** 
 	 * Chef's private Queue<Order>
 	 */
-	private Queue /*<Order>*/ orderQ;
+	private Queue<Order> orderQ;
 	
 	public Chef(String named, float pay) {
 		super(named, pay);

@@ -4,7 +4,7 @@ public class Table {
 	private Integer tableNumber;
 	private Waiter tableWaiter;
 	private Color status;
-	private Bill tableBill;
+	private Bill tableBill = new Bill(tableWaiter, this);;
 	private int maxSeat;
 	private int numSeated;
 	private int positionRow;
@@ -20,7 +20,7 @@ public class Table {
 			default: {status = Color.red; break;}
 		}
 		tableWaiter = w;
-		tableBill = new Bill(w, this);
+		tableBill = new Bill(tableWaiter, this);;
 		positionRow = posR;
 		positionCol = posC;
 	}
@@ -55,9 +55,8 @@ public class Table {
 	void cleanedTable(){
 		status = Color.green;
 		numSeated = 0;
-		DataKeeper.restaurantRecord.sendBill(tableBill);
+		//DataKeeper.restaurantRecord.sendBill(tableBill);
 		DataKeeper.updatesTableInDatabase(this);
-		System.out.println("--Gets here");
 	}
 	
 	void assignedTable(){

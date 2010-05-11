@@ -31,9 +31,7 @@ public class MenuUI extends JFrame{
 	public MenuUI(Bill bi){
 		
 		menuBill = bi;
-		
-		//int size[] = DataKeeper.getSizeOfMenu();
-		
+				
 		MENU_ROWS = 4;
 		MENU_COLUMNS = 3;
 		
@@ -60,9 +58,6 @@ public class MenuUI extends JFrame{
 						
 						if (previousButton == null) previousButton = selectedButton;
 
-						System.out.println("Selected button is " + selectedButton.getText());
-						System.out.println("Previous button is " + previousButton.getText());
-						
 						if (selectedButton.getBackground() == Color.gray){
 							previousButton.setBackground(Color.gray);
 							selectedButton.setBackground(Color.yellow);
