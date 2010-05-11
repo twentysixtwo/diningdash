@@ -39,5 +39,13 @@ public class DataKeeper {
 	public static void updatesTableInDatabase(Table t){
 		RecordKeeper.updatesTable(t);
 	}
+	
+	public static int[] getSizeOfMenu(){
+		return RecordKeeper.getMenuSize();
+	}
+	
+	public static LinkedList<String> getListOfMenu(){
+		return RecordKeeper.getMenuItems();
+	}
 
 }
