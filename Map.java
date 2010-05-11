@@ -19,7 +19,7 @@ public class Map {
 	
 	/**
 	 * Adds the tables in the restaurant. Each table will instantiate a new table. As a reminder, the arguments are
-	 * <Table number, max number of people in the table, waiter name, row position, col position>
+	 * <Table number, max number of people allowed at the table, waiter name, row position, col position>
 	 */
 	private void addTables(){
 		Table t1 = new Table(1, 4, null, 1, 1);

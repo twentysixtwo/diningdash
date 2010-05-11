@@ -57,6 +57,7 @@ public class Bill {
 		itsWaiter = waiterName;
 		itsTable = t;
 		isCooked = false;
+		orders = new LinkedList<Order>();
 	}
 	
 	/**
@@ -75,7 +76,7 @@ public class Bill {
 			DataKeeper.globalKitchen.addToQueue(o);
 			System.out.println("Order placed");
 		}
-		catch (Exception e){System.out.println("Cannot add order to bill");}
+		catch (Exception e){System.out.println("Some error occured");}
 	}
 	
 	/**
