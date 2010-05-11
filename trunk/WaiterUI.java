@@ -28,14 +28,13 @@ public class WaiterUI extends JFrame{
 	int MAX_COLUMNS;
 	
 	static int tableNumber;
-	static DataKeeper dk = new DataKeeper();
-	static LinkedList<Table> tableList = dk.getTables();
 	
 	final static JTextArea tableOrder = new JTextArea(20, 25);
 	
 	String waiterName;
 	static String infoText = new String();
 	static Bill tableBill = null;
+	static LinkedList<Table> tableList;
 	
 	/**
 	 * This is the constructor for the BusboyUI class and is called whenever a new waiter window is needed. It generates the
@@ -51,7 +50,8 @@ public class WaiterUI extends JFrame{
 
 		waiterName = new String("Waiter "+ waiterName);
 		
-		dk = new DataKeeper();
+		DataKeeper dk = new DataKeeper();
+		tableList = dk.getTables();
 		
 		
 		// Size of restaurant is determined by the TotalRows and TotalCols field in DataKeeper's restaurantMap
