@@ -1,4 +1,5 @@
 import java.util.*;
+import java.awt.Color;
 import java.sql.*;
 
 /**
@@ -606,6 +607,18 @@ public class RecordKeeper {
 				s.execute("select * from Map where TableNumber=-1");
 				s.executeUpdate("update Map set Col="+t.getPosCol()+ " where TableNumber="+t.getTableNumber()+"");
 				s.execute("select * from Map where TableNumber=-1");
+				if(t.getStatus() == Color.green){
+					s.executeUpdate("update Map set Status="+ 0 + " where TableNumber="+t.getTableNumber()+"");
+					s.execute("select * from Map where TableNumber=-1");
+				}
+				else if(t.getStatus() == Color.yellow){
+					s.executeUpdate("update Map set Status="+ 1 + " where TableNumber="+t.getTableNumber()+"");
+					s.execute("select * from Map where TableNumber=-1");
+				}
+				else if(t.getStatus() == Color.red){
+					s.executeUpdate("update Map set Status="+ 2 + " where TableNumber="+t.getTableNumber()+"");
+					s.execute("select * from Map where TableNumber=-1");
+				}
 			}
 		}
 		catch (Exception e) {System.out.println("exception: "+e);}

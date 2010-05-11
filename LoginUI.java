@@ -122,6 +122,7 @@ public class LoginUI extends JPanel{
 			case 2: {
 				System.out.println("Hello " + nameField.getText());
 				System.out.println("Password verified");
+				HostUI hui = new HostUI(this, nameField.getText());
 				nameField.setText("");
 				passwordField.setText("");
 				break;

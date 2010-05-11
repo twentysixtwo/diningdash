@@ -34,6 +34,6 @@ public class Map {
 	}
 	
 	public LinkedList<Table> getTableList(){
-		return resturantTables;
+		return RecordKeeper.getMap();
 	}
 }

@@ -52,12 +52,18 @@ public class Table {
 	}
 	int getNumSeat(){return numSeated;}
 	
-	int cleanedTable(){
+	void cleanedTable(){
 		status = Color.green;
 		numSeated = 0;
 		DataKeeper.restaurantRecord.sendBill(tableBill);
 		DataKeeper.updatesTableInDatabase(this);
-		return 1;
+		System.out.println("--Gets here");
+	}
+	
+	void assignedTable(){
+		status = Color.yellow;
+		numSeated = 4;
+		DataKeeper.updatesTableInDatabase(this);
 	}
 	
 	int getPosRow(){
