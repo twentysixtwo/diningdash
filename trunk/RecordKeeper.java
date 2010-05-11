@@ -511,7 +511,7 @@ public class RecordKeeper {
 			rs=s.getResultSet();
 			while (rs.next() == true)
 			{
-				Table t = new Table(rs.getInt(1), 4, null, rs.getInt(2), rs.getInt(3));
+				Table t = new Table(rs.getInt(1), 4, null, rs.getInt(2), rs.getInt(3), rs.getInt(4));
 				tableList.add(t);
 			}
 		}

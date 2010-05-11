@@ -12,8 +12,8 @@ public class Map {
 	 * Default constructor for Map class
 	 */
 	public Map(){
-		TotalRows = 17;
-		TotalCols = 15;
+		TotalRows = 11;
+		TotalCols = 11;
 		addTables();
 	}
 	
