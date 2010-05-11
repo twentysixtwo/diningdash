@@ -61,6 +61,7 @@ public class WaiterUI extends JFrame{
 		JButton tableButton;
 		final JLabel tableInfo = new JLabel();
 		tableOrder.setEditable(false);
+		tableOrder.setLineWrap(true);
 		
 		tableNumber = 1;
 		int index = 0;
@@ -234,8 +235,10 @@ public class WaiterUI extends JFrame{
 		else{
 			infoText = new String();
 			for(Order o:foodOrders){
-				infoText = infoText + o.getFoodName() + '\n' + '\t' + o.getComment() + '\n';
-				tableOrder.setText(infoText);
+				if(o.getFoodName() != null){
+					infoText = infoText + o.getFoodName() + '\n' + '\t' + o.getComment() + '\n';
+					tableOrder.setText(infoText);
+				}
 			}
 		}
 	}
