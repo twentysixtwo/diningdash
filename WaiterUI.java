@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
 import java.util.LinkedList;
+import java.util.concurrent.SynchronousQueue;
 
 /**
  * WaiterUI is the user interface for the waiter.
@@ -10,7 +11,7 @@ import java.util.LinkedList;
  */
 
 @SuppressWarnings("serial")
-public class WaiterUI extends JFrame{
+public class WaiterUI extends JFrame implements Runnable{
 
 	/**
 	 * Reference to the login screen that opened this WaiterUI
@@ -30,21 +31,30 @@ public class WaiterUI extends JFrame{
 	int tableNumber;
 	LinkedList<Table> tableList = new DataKeeper().getTables();
 	
+	final JTextArea tableOrder = new JTextArea(20, 25);
+	
 	String waiterName;
 	
+	// A flag as a stupid signal for the menu
+	boolean flag = false;
+	String foodName = null;
+	String foodComment = null;
+	
 	/**
-	 * This is the constructor for the BusboyUI class and is called whenever a new busboy window is needed. It generates the
+	 * This is the constructor for the BusboyUI class and is called whenever a new waiter window is needed. It generates the
 	 * window, and displays the up to date map of the restaurant, including the status of every table.
 	 */
 	public WaiterUI(LoginUI loginWindow,String name){
 		super("Waiter");
-		
+		waiterName = name;
 		opener = loginWindow;
 		
 		opener.setVisible(false);
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-		
-		waiterName = new String("Waiter "+name);
+	}
+	
+	public void run(){
+		waiterName = new String("Waiter "+ waiterName);
 		
 		// Size of restaurant is determined by the TotalRows and TotalCols field in DataKeeper's restaurantMap
 		// To change size, adjust the constructor of Map class
@@ -55,7 +65,6 @@ public class WaiterUI extends JFrame{
 		
 		JButton tableButton;
 		final JLabel tableInfo = new JLabel();
-		final JTextArea tableOrder = new JTextArea(20, 25);
 		tableOrder.setEditable(false);
 		
 		tableNumber = 1;
@@ -82,19 +91,7 @@ public class WaiterUI extends JFrame{
 								tableInfo.setText("<html>Table " + tableNumber + "<p>" + 
 													"Occupancy: " + seated);
 								tableInfo.setMinimumSize(new Dimension(100, 30));
-								
-								String infoText = new String();
-								LinkedList<Order> foodOrders = tableBill.getOrders();
-								if(foodOrders == null){
-									tableOrder.setText("No orders placed");
-								}
-								else{
-									for(Order o:foodOrders){
-										infoText = infoText + o.getFoodName() + '\n' + '\t' +
-												o.getComment() + '\n';
-									}
-									tableOrder.setText(infoText);
-								}
+								updateOrderView();
 							}
 						}
 					});
@@ -128,19 +125,7 @@ public class WaiterUI extends JFrame{
 		placeOrderButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				placeOrder();
-				
-				Bill b = null;
-				for(Table t : tableList){
-					if(t.getTableNumber() == tableNumber){
-						b = t.getTableBill();
-					}
-				}
-				LinkedList<Order> foodOrders = b.getOrders();
-				String infoText = new String();
-				for(Order o:foodOrders){
-					infoText = infoText + o.getFoodName() + '\n' + '\t' + o.getComment() + '\n';
-					tableOrder.setText(infoText);
-				}
+				updateOrderView();
 			}
 		});
 		
@@ -227,14 +212,45 @@ public class WaiterUI extends JFrame{
 	
 	private void placeOrder(){
 		Bill b = null;
+		Color tableColor = null;
+		for(Table t : tableList){
+			if(t.getTableNumber() == tableNumber){
+				b = t.getTableBill();
+				tableColor = t.getStatus();
+			}
+		}
+		if( (b!= null) && (tableColor == Color.yellow)){
+			Thread t = new Thread(new MenuUI(this));
+			try {
+				synchronized (this) {
+					t.start();
+					this.wait();
+					System.out.println(foodName);
+				}
+			} catch (InterruptedException e) {
+				System.out.println("Error with the menu");
+			}
+			//while(flag == false);
+			if( (foodName != null)){
+				b.addOrder(foodName,foodComment);
+			}
+			flag = false;
+		}
+		else System.out.println("Order not placed");
+	}
+	
+	private void updateOrderView(){
+		Bill b = null;
 		for(Table t : tableList){
 			if(t.getTableNumber() == tableNumber){
 				b = t.getTableBill();
 			}
 		}
-		if(b!= null){
-			b.addOrder("Fried Fish", "No comment");
+		LinkedList<Order> foodOrders = b.getOrders();
+		String infoText = new String();
+		for(Order o:foodOrders){
+			infoText = infoText + o.getFoodName() + '\n' + '\t' + o.getComment() + '\n';
+			tableOrder.setText(infoText);
 		}
-		else System.out.println("Order not placed");
 	}
 }

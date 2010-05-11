@@ -457,4 +457,26 @@ public class RecordKeeper {
 		 * the new t.
 		 */
 	}
+	
+	public static int[] getMenuSize(){
+		/*
+		 * Queries the database to get the size of the menu. Return row then column in an array
+		 */
+		int temp[] = {5, 5};
+		return temp;
+	}
+	
+	public static LinkedList<String> getMenuItems(){
+		LinkedList<String> foodOnMenu = new LinkedList<String>();
+		foodOnMenu.add(new String("Spagetti"));
+		foodOnMenu.add(new String("Peanut Butter Jelly Sandwich"));
+		foodOnMenu.add(new String("French Soup"));
+		foodOnMenu.add(new String("German Soup"));
+		foodOnMenu.add(new String("French-German Soup"));
+		foodOnMenu.add(new String("German-French Soup"));
+		foodOnMenu.add(new String("Split Pea Soup"));
+		foodOnMenu.add(new String("Fusion Pea Soup"));
+		foodOnMenu.add(new String("Pea Pea Soup"));
+		return foodOnMenu;
+	}
 }
