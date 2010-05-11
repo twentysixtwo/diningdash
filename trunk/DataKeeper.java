@@ -1,8 +1,9 @@
 import java.util.LinkedList;
 
 /**
- * The DataKeeper class contains all the functions to be called from the other subsystems.
- * @author henry
+ * The DataKeeper class contains all the functions to be called from 
+ * the other subsystems.
+ * @author Henry Chao
  *
  */
 
@@ -18,7 +19,7 @@ public class DataKeeper {
 	 */
 	public static Map restaurantMap;
 	
-	public static RecordKeeper restaurantRecord;
+	public static RecordKeeper restaurantRecord = new RecordKeeper();
 	
 	/**
 	 * Default constructor for DataKeeper. Will instantiate a new kitchen and map object.
@@ -37,18 +38,19 @@ public class DataKeeper {
 	}
 	
 	public static void updatesTableInDatabase(Table t){
-		RecordKeeper rec=new RecordKeeper();
-		rec.updatesTable(t);
+		restaurantRecord.updatesTable(t);
 	}
 	
 	public static int[] getSizeOfMenu(){
-		RecordKeeper rec=new RecordKeeper();
-		return rec.getMenuSize();
+		return restaurantRecord.getMenuSize();
 	}
 	
 	public static LinkedList<String> getListOfMenu(){
-		RecordKeeper rec=new RecordKeeper();
-		return rec.getMenuItems();
+		return restaurantRecord.getMenuItems();
+	}
+
+	public String[] getListOfWaiters() {
+		return restaurantRecord.getWaiterList();
 	}
 
 }
