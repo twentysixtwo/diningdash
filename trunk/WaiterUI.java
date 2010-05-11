@@ -128,6 +128,19 @@ public class WaiterUI extends JFrame{
 		placeOrderButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				placeOrder();
+				
+				Bill b = null;
+				for(Table t : tableList){
+					if(t.getTableNumber() == tableNumber){
+						b = t.getTableBill();
+					}
+				}
+				LinkedList<Order> foodOrders = b.getOrders();
+				String infoText = new String();
+				for(Order o:foodOrders){
+					infoText = infoText + o.getFoodName() + '\n' + '\t' + o.getComment() + '\n';
+					tableOrder.setText(infoText);
+				}
 			}
 		});
 		
