@@ -18,6 +18,7 @@ public class MenuUI extends JFrame{
 	int MENU_ROWS;
 	int MENU_COLUMNS;
 	JButton selectedButton;
+	JButton previousButton = null;
 	
 	String foodName = null;
 	String foodComment = null;
@@ -56,12 +57,17 @@ public class MenuUI extends JFrame{
 				menuButton.addActionListener(new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						selectedButton = (JButton)e.getSource();
+						if (previousButton == null) previousButton = selectedButton;
+						
 						if (selectedButton.getBackground() == Color.gray){
+							previousButton.setBackground(Color.gray);
 							selectedButton.setBackground(Color.yellow);
+							previousButton = selectedButton;
 							foodName = selectedButton.getText();
 						}
 						else if(selectedButton.getBackground() == Color.yellow){
 							selectedButton.setBackground(Color.gray);
+							previousButton.setBackground(Color.gray);
 							foodName = null;
 						}
 					}
@@ -82,6 +88,7 @@ public class MenuUI extends JFrame{
 					foodComment = commentField.getText();
 					menuBill.addOrder(foodName, foodComment);
 					closeMenu();
+					WaiterUI.updateOrderView();
 			}
 		});
 		gridPanel.add(addOrderButton);
