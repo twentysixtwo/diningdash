@@ -28,14 +28,14 @@ public class WaiterUI extends JFrame{
 	int MAX_ROWS;
 	int MAX_COLUMNS;
 	
-	int tableNumber;
-	LinkedList<Table> tableList = new DataKeeper().getTables();
+	static int tableNumber;
+	static LinkedList<Table> tableList = new DataKeeper().getTables();
 	
-	final JTextArea tableOrder = new JTextArea(20, 25);
+	final static JTextArea tableOrder = new JTextArea(20, 25);
 	
 	String waiterName;
-	String infoText = new String();
-	Bill b = null;
+	static String infoText = new String();
+	static Bill b = null;
 	
 	/**
 	 * This is the constructor for the BusboyUI class and is called whenever a new waiter window is needed. It generates the
@@ -217,10 +217,11 @@ public class WaiterUI extends JFrame{
 			MenuUI mui = new MenuUI(b);
 		}
 		else System.out.println("Order not placed");
+		
 		updateOrderView();
 	}
 	
-	private void updateOrderView(){
+	static void updateOrderView(){
 		for(Table t : tableList){
 			if(t.getTableNumber() == tableNumber){
 				b = t.getTableBill();
