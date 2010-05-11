@@ -10,10 +10,15 @@ public class Table {
 	private int positionRow;
 	private int positionCol;
 	
-	Table(int tableNum, int maxSeated, Waiter w, int posR, int posC){
+	Table(int tableNum, int maxSeated, Waiter w, int posR, int posC, int stat){
 		tableNumber = tableNum;
 		maxSeat = maxSeated;
-		status = Color.green;
+		switch(stat){
+			case 0: {status = Color.green; break;}
+			case 1: {status = Color.yellow; break;}
+			case 2: {status = Color.red; break;}
+			default: {status = Color.red; break;}
+		}
 		tableWaiter = w;
 		tableBill = new Bill(w, this);
 		positionRow = posR;
