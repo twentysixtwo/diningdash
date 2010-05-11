@@ -15,7 +15,7 @@ public class LoginUI extends JPanel{
 	
 	JTextField nameField;
 
-	JTextField passwordField;
+	JPasswordField passwordField;
 	
 	/** 
 	 * This is the constructor for the LoginUI class. It generates the actual login window, sets up all of the buttons and
@@ -69,7 +69,7 @@ public class LoginUI extends JPanel{
 		gbc.gridx = 1;
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		
-		passwordField = new JTextField(20);
+		passwordField = new JPasswordField(20);
 		
 		add(passwordField,gbc);
 		
@@ -106,11 +106,10 @@ public class LoginUI extends JPanel{
 	 * If either the username or password is incorrect nothing will happen.
 	 */
 	public void loginButtonClicked(){
-		System.out.println("Username: "+nameField.getText());
-		System.out.println("Password: "+passwordField.getText());
+		System.out.println("Username: " + nameField.getText());
 		
 		RecordKeeper rec=new RecordKeeper();
-		int accType = rec.login(nameField.getText(), passwordField.getText());
+		int accType = rec.login(nameField.getText(), passwordField.getPassword());
 		switch (accType){
 			case 1: {
 				System.out.println("Hello " + nameField.getText());
