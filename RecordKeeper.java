@@ -13,13 +13,12 @@ public class RecordKeeper {
 	/**
 	 * Path of the database file
 	 */
-	
 	String databasePath = System.getProperty("user.dir") + "\\src\\RestaurantDatabase.mdb";
 	
 	/**
 	 * Connection to the database file
 	 */
-	Connection con;
+	static Connection con;
 	
 	/**
 	 * Constructor for the RecordKeeper class.  This constructor connects
@@ -402,16 +401,18 @@ public class RecordKeeper {
 	}
 
 	
-	
+	/*
+	 * This method is no longer necessary 
 	/**
 	 * Returns a list of all employees that have worked in the restaurant
 	 * 
 	 * @return List of Accounts
-	 */
+	 
 	List<Account> listEmployees(){
 		List<Account> data=new LinkedList<Account>();
 		return data;
 	}
+	*/
 	
 	/**
 	 * Returns a list of all employees that have worked in the restaurant
@@ -496,14 +497,26 @@ public class RecordKeeper {
 	 * Returns the information about the tables used to create the
 	 * floor map
 	 * 
-	 * @return Returns an array with 3 columns and as many rows as
-	 * there are tables.  The first column contains the table number,
-	 * and the next two columns contain the x and y location of the
-	 * table on the floor map.
+	 * As a reminder, the arguments are
+	 * <Table number, max number of people allowed at the table, waiter name, row position, col position>
+	 * 
+	 * @return 
 	 */
-	int[][] getMap(){
-		int [][] map=new int[3][5];
-		return map;
+	public static LinkedList<Table> getMap(){
+		LinkedList<Table> tableList = new LinkedList<Table>();
+		ResultSet rs;
+		try {
+			Statement s = con.createStatement();
+			s.execute("select * from Map");
+			rs=s.getResultSet();
+			while (rs.next() == true)
+			{
+				Table t = new Table(rs.getInt(1), 4, null, rs.getInt(2), rs.getInt(3));
+				tableList.add(t);
+			}
+		}
+		catch (Exception e) {System.out.println("exception: "+e);};
+		return tableList;
 	}
 	
 	/**
