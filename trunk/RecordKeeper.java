@@ -11,23 +11,40 @@ import java.sql.*;
 public class RecordKeeper {
 
 	/**
+	 * Path of the database file
+	 */
+	String databasePath="C:\\Users\\admin\\Documents\\workspace\\restaurant\\RestaurantDatabase.mdb";
+	
+	/**
+	 * Connection to the database file
+	 */
+	Connection con;
+	
+	/**
 	 * Constructor for the RecordKeeper class.  This constructor connects
 	 * to the database.
 	 */
 	RecordKeeper(){
-		
+		connectToDatabase();
 	}
 	
-	/**
-	 * Path of the database file
-	 */
-	String databasePath;
+	
 	
 	/**
 	 * Connects to the database file
 	 */
 	void connectToDatabase(){
-		
+		try {
+            Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+            // set this to a MS Access DB you have on your machine
+            String url = "jdbc:odbc:DRIVER={Microsoft Access Driver (*.mdb)};DBQ="+databasePath;
+            // now we can get the connection from the DriverManager
+            con = DriverManager.getConnection( url ,"","");
+        }
+
+            catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
 	}
 	
 
@@ -61,6 +78,25 @@ public class RecordKeeper {
 	 */
 	boolean addUser(Account newAccount, String password)
 	{
+		ResultSet rs;
+		try {
+			Statement s = con.createStatement();
+			s.execute("select Username from Accounts where Username='"+newAccount.getName()+"'");
+			rs=s.getResultSet();
+			if (rs.next()==true)
+			{
+				return false;
+			}
+			else
+			{
+				s.executeUpdate("insert into Accounts values('"+newAccount.getName()+"','"+newAccount.name+"','"+password+"','"+newAccount.day+"',"+newAccount.payRate+","+newAccount.startTime+","+newAccount.endTime+","+newAccount.employeeID+","+newAccount.type+")");
+				s.execute("select * from Map where TableNumber=-1");
+			}
+		}
+
+		catch (Exception e) {
+            System.out.println("Error: " + e);
+		}
 		return true;
 	}
 
@@ -74,6 +110,28 @@ public class RecordKeeper {
 	 */
 	void addFood(String name, double price, String date)
 	{
+		ResultSet rs;
+		try {
+			Statement s = con.createStatement();
+			s.execute("select Name from Food where Name='"+name+"'");
+			rs=s.getResultSet();
+			if (rs.next()==true)
+			{
+				s.executeUpdate("update Food set Price="+price+ " where Name='"+name+"'");
+				s.execute("select * from Map where TableNumber=-1");
+				s.executeUpdate("update Food set Day='"+date+ "' where Name='"+name+"'");
+				s.execute("select * from Map where TableNumber=-1");
+			}
+			else
+			{
+				s.executeUpdate("insert into Food values('"+name+"',"+price+",'"+date+"')");
+				s.execute("select * from Map where TableNumber=-1");
+			}
+		}
+
+		catch (Exception e) {
+            System.out.println("Error: " + e);
+		}
 		
 	}
 	
@@ -290,8 +348,24 @@ public class RecordKeeper {
 	 */
 	double foodPrice(String foodName)
 	{
-		double price=0;
-		return price;
+		ResultSet rs;
+		try {
+			Statement s = con.createStatement();
+			s.execute("select Price from Food where Name='"+foodName+"'");
+			rs=s.getResultSet();
+			if (rs.next()==true)
+			{
+				return rs.getDouble(1);
+			}
+			else
+			{
+				return 0;
+
+			}
+			
+		}
+		catch (Exception e) {System.out.println("exception: "+e);}
+		return 0;
 	}
 	
 
@@ -394,8 +468,25 @@ public class RecordKeeper {
 	 * Account type 2 = Host
 	 * Account type 3 = Waiter
 	 */
-	static int login(String username, String password){
-		return 3;
+	int login(String username, String password){
+		ResultSet rs;
+		try {
+			Statement s = con.createStatement();
+			s.execute("select Type from Accounts where Username='"+username+"' and Password='"+password+"'");
+			rs=s.getResultSet();
+			if (rs.next()==true)
+			{
+				return rs.getInt(1);
+			}
+			else
+			{
+				return 0;
+
+			}
+			
+		}
+		catch (Exception e) {System.out.println("exception: "+e);};
+		return 0;
 	}
 	
 	/**
@@ -414,14 +505,36 @@ public class RecordKeeper {
 	
 	/**
 	 * Adds the specified table data to the database.  This entry contains
-	 * the table number and location of the table on the floor map.
+	 * the table number and location of the table on the floor map.  If the
+	 * table number already exists, updates that table with the new row
+	 * and column information.
 	 * 
 	 * @param tableNum  The number of the table
 	 * @param xLocation  The x location of the table on the floor map
 	 * @param yLocation  The y location of the table on the floor map
 	 */
-	void addTable(int tableNum, int xLocation, int yLocation){
-		
+	void addTable(int tableNum, int row, int col){
+		ResultSet rs;
+		try {
+			Statement s = con.createStatement();
+			s.execute("select TableNumber from Map where TableNumber="+tableNum+"");
+			rs=s.getResultSet();
+			if (rs.next()==true)
+			{
+				s.executeUpdate("update Map set Row="+row+ " where TableNumber="+tableNum+"");
+				s.execute("select * from Map where TableNumber=-1");
+				s.executeUpdate("update Map set Col="+col+ " where TableNumber="+tableNum+"");
+				s.execute("select * from Map where TableNumber=-1");
+			}
+			else
+			{
+				s.executeUpdate("insert into Map values("+tableNum+","+row+","+col+")");
+				s.execute("select * from Map where TableNumber=-1");
+
+			}
+			
+		}
+		catch (Exception e) {System.out.println("exception: "+e);}
 	}
 	
 	/**
@@ -432,6 +545,14 @@ public class RecordKeeper {
 	 * and returns false if the operation failed.
 	 */
 	boolean removeTable(int tableNum){
+		try {
+			Statement s = con.createStatement();
+			s.executeUpdate("delete from Map where TableNumber="+tableNum+"");
+			s.execute("select * from Map where TableNumber=-1");
+		}
+		catch (Exception e) {System.out.println("exception: "+e);}
+		
+		
 		return true;
 	}
 
@@ -440,6 +561,8 @@ public class RecordKeeper {
 		// TODO Auto-generated method stub
 	}
 	
+	
+	/* Just use login()
 	public static boolean checkUsername(String s){
 		// Insert an if statement to query the database for the user name. Return true if it is found.
 		return true;
@@ -449,34 +572,64 @@ public class RecordKeeper {
 	public static boolean checkPassword(String s){
 		//Insert an if statement to query the database for the password. Return true if it is found.
 		return true;
-	}
+	}*/
 	
-	public static void updatesTable(Table t){
+	public void updatesTable(Table t){
 		/*
 		 * Queries the database by the table number of t. Then updates the record in the database with
 		 * the new t.
 		 */
+		ResultSet rs;
+		try {
+			Statement s = con.createStatement();
+			s.execute("select TableNumber from Map where TableNumber="+t.getTableNumber()+"");
+			rs=s.getResultSet();
+			if (rs.next()==true)
+			{
+				s.executeUpdate("update Map set Row="+t.getPosRow()+ " where TableNumber="+t.getTableNumber()+"");
+				s.execute("select * from Map where TableNumber=-1");
+				s.executeUpdate("update Map set Col="+t.getPosCol()+ " where TableNumber="+t.getTableNumber()+"");
+				s.execute("select * from Map where TableNumber=-1");
+			}
+		}
+		catch (Exception e) {System.out.println("exception: "+e);}
 	}
 	
-	public static int[] getMenuSize(){
+	
+	
+	
+	public int[] getMenuSize(){
 		/*
 		 * Queries the database to get the size of the menu. Return row then column in an array
 		 */
-		int temp[] = {5, 5};
-		return temp;
+		int count=0;
+		try {
+			Statement s=con.createStatement();
+			s.execute("select * from Food");
+			ResultSet rs= s.getResultSet();
+			while (rs.next())
+			{
+				count++;
+			}
+		}catch (Exception e) {}
+		int ret[]=new int[2];
+		ret[0]=count;
+		ret[1]=3;
+		return ret;
 	}
 	
-	public static LinkedList<String> getMenuItems(){
+	public LinkedList<String> getMenuItems(){
 		LinkedList<String> foodOnMenu = new LinkedList<String>();
-		foodOnMenu.add(new String("Spagetti"));
-		foodOnMenu.add(new String("Peanut Butter Jelly Sandwich"));
-		foodOnMenu.add(new String("French Soup"));
-		foodOnMenu.add(new String("German Soup"));
-		foodOnMenu.add(new String("French-German Soup"));
-		foodOnMenu.add(new String("German-French Soup"));
-		foodOnMenu.add(new String("Split Pea Soup"));
-		foodOnMenu.add(new String("Fusion Pea Soup"));
-		foodOnMenu.add(new String("Pea Pea Soup"));
+		try {
+			Statement s=con.createStatement();
+			s.execute("select * from Food");
+			ResultSet rs= s.getResultSet();
+			while (rs.next())
+			{
+				foodOnMenu.add(rs.getString(1));
+			}
+		}catch (Exception e) {}
+		
 		return foodOnMenu;
 	}
 }
