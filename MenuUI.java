@@ -34,8 +34,8 @@ public class MenuUI extends JFrame{
 		
 		//int size[] = DataKeeper.getSizeOfMenu();
 		
-		MENU_ROWS = 5;
-		MENU_COLUMNS = 5;
+		MENU_ROWS = 4;
+		MENU_COLUMNS = 3;
 		
 		gridPanel = new JPanel(new GridLayout(MENU_ROWS,MENU_COLUMNS));
 		
@@ -57,7 +57,11 @@ public class MenuUI extends JFrame{
 				menuButton.addActionListener(new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						selectedButton = (JButton)e.getSource();
+						
 						if (previousButton == null) previousButton = selectedButton;
+
+						System.out.println("Selected button is " + selectedButton.getText());
+						System.out.println("Previous button is " + previousButton.getText());
 						
 						if (selectedButton.getBackground() == Color.gray){
 							previousButton.setBackground(Color.gray);
