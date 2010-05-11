@@ -12,32 +12,37 @@ public class Account {
 	/**
 	 * Employee userName and name
 	 */
-	private String userName;
-	private String name;
+	String userName;
+	String name;
 	/**
 	 * 
 	 */
-	private String day;
+	String day;
 	
 	/**
 	 * Employee pay rate
 	 */
-	private float payRate;
+	float payRate;
 	
 	/**
 	 * Time of employee log in
 	 */
-	private int startTime;
+	int startTime;
 	
 	/**
 	 * Time of employee log out
 	 */
-	private int endTime;
+	int endTime;
 	
 	/**
 	 * Employee ID number
 	 */
-	private int employeeID;
+	int employeeID;
+	
+	/**
+	 * Type of account.
+	 */
+	int type;
 	
 	/**
 	 * Default constructor for Account
@@ -52,7 +57,7 @@ public class Account {
 	
 	/**
 	 * Returns the Employee's userName. Used for verification/log in
-	 * @return Employee name
+	 * @return Employee username
 	 */
 	public String getName() {
 		return userName;
