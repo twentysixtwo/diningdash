@@ -125,8 +125,7 @@ public class LoginUI extends JPanel{
 			case 3:{
 				System.out.println("Hello " + nameField.getText());
 				System.out.println("Password verified");
-				Thread tMain = new Thread(new WaiterUI(this, nameField.getText()));
-				tMain.start();
+				WaiterUI wui = new WaiterUI(this, nameField.getText());
 				break;
 			}
 			default: {
