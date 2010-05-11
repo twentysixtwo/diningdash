@@ -29,7 +29,8 @@ public class WaiterUI extends JFrame{
 	int MAX_COLUMNS;
 	
 	static int tableNumber;
-	static LinkedList<Table> tableList = new DataKeeper().getTables();
+	static LinkedList<Table> tableList;
+	DataKeeper dk = new DataKeeper();
 	
 	final static JTextArea tableOrder = new JTextArea(20, 25);
 	
@@ -63,6 +64,8 @@ public class WaiterUI extends JFrame{
 		tableOrder.setEditable(false);
 		tableOrder.setLineWrap(true);
 		
+
+		tableList = new DataKeeper().getTables();
 		tableNumber = 1;
 		int index = 0;
 		Table t = tableList.get(index++);
@@ -185,6 +188,8 @@ public class WaiterUI extends JFrame{
 	}
 	
 	private void toggleDirty(){
+		tableList = new DataKeeper().getTables();
+		
 		if(selectedButton.getBackground() == Color.yellow){
 			selectedButton.setBackground(Color.red);
 			System.out.println("Table "+tableNumber+" is dirty");
@@ -208,6 +213,8 @@ public class WaiterUI extends JFrame{
 	private void placeOrder(){
 		Bill b = null;
 		Color tableColor = null;
+		tableList = new DataKeeper().getTables();
+		
 		for(Table t : tableList){
 			if(t.getTableNumber() == tableNumber){
 				b = t.getTableBill();

@@ -31,7 +31,8 @@ public class BusboyUI extends JFrame{
 	int MAX_COLUMNS;
 	
 	int tableNumber;
-	LinkedList<Table> tableList = new DataKeeper().getTables();
+	LinkedList<Table> tableList;
+	DataKeeper dk = new DataKeeper();
 	
 	String busboyName;
 	
@@ -58,7 +59,8 @@ public class BusboyUI extends JFrame{
 		
 		JButton tableButton;
 		tableNumber = 1;
-		
+
+		tableList = new DataKeeper().getTables();
 		Table t = tableList.pop();
 			
 		for(y=0;y<MAX_ROWS;y++)
@@ -134,6 +136,7 @@ public class BusboyUI extends JFrame{
 	public void cleanTable(){
 		if(selectedButton.getBackground() == Color.red)
 		{
+			tableList = new DataKeeper().getTables();
 			selectedButton.setBackground(Color.green);
 			System.out.println("Table "+tableNumber+" is clean");
 			for(Table t : tableList){
