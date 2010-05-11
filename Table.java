@@ -56,6 +56,7 @@ public class Table {
 		status = Color.green;
 		numSeated = 0;
 		//DataKeeper.restaurantRecord.sendBill(tableBill);
+		tableBill = null;
 		DataKeeper.updatesTableInDatabase(this);
 	}
 	
