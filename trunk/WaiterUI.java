@@ -34,6 +34,8 @@ public class WaiterUI extends JFrame{
 	final JTextArea tableOrder = new JTextArea(20, 25);
 	
 	String waiterName;
+	String infoText = new String();
+	Bill b = null;
 	
 	/**
 	 * This is the constructor for the BusboyUI class and is called whenever a new waiter window is needed. It generates the
@@ -85,7 +87,7 @@ public class WaiterUI extends JFrame{
 													"Occupancy: " + seated);
 								tableInfo.setMinimumSize(new Dimension(100, 30));
 							}
-							updateOrderView(tableNumber);
+							updateOrderView();
 						}
 					});
 					
@@ -215,22 +217,25 @@ public class WaiterUI extends JFrame{
 			MenuUI mui = new MenuUI(b);
 		}
 		else System.out.println("Order not placed");
-		updateOrderView(tableNumber);
+		updateOrderView();
 	}
 	
-	private void updateOrderView(int tn){
-		int tnumber = tn;
-		Bill b = null;
+	private void updateOrderView(){
 		for(Table t : tableList){
-			if(t.getTableNumber() == tnumber){
+			if(t.getTableNumber() == tableNumber){
 				b = t.getTableBill();
 			}
 		}
 		LinkedList<Order> foodOrders = b.getOrders();
-		String infoText = new String();
-		for(Order o:foodOrders){
-			infoText = infoText + o.getFoodName() + '\n' + '\t' + o.getComment() + '\n';
-			tableOrder.setText(infoText);
+		if(foodOrders.size() == 0){
+			tableOrder.setText(null);
+		}
+		else{
+			infoText = new String();
+			for(Order o:foodOrders){
+				infoText = infoText + o.getFoodName() + '\n' + '\t' + o.getComment() + '\n';
+				tableOrder.setText(infoText);
+			}
 		}
 	}
 }
