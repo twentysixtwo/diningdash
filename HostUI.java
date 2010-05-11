@@ -8,7 +8,7 @@ import java.util.LinkedList;
 /** 
  * This is the UI for the Host accounts
  * 
- * @author Henry
+ * @author Henry Chao
  */
 public class HostUI extends JFrame{
 
@@ -31,6 +31,8 @@ public class HostUI extends JFrame{
 	LinkedList<Table> tableList;
 	DataKeeper dk = new DataKeeper();
 	
+	JComboBox cb = new JComboBox();
+	
 	String hostName;
 	
 	/**
@@ -45,7 +47,7 @@ public class HostUI extends JFrame{
 		opener.setVisible(false);
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		
-		hostName = new String("Busboy "+name);
+		hostName = new String("Host " + name);
 		
 		// Size of restaurant is determined by the TotalRows and TotalCols field in DataKeeper's restaurantMap
 		// To change size, adjust the constructor of Map class
@@ -85,8 +87,7 @@ public class HostUI extends JFrame{
 				else{
 					tableButton = new JButton();
 					tableButton.setBackground(Color.gray);
-				}
-			;
+				};
 				
 				tableNumber++;
 				
@@ -95,10 +96,36 @@ public class HostUI extends JFrame{
 			}
 		}
 		
-		JPanel buttonPanel = new JPanel(new GridLayout(1,2,10,10));
+		JPanel buttonPanel = new JPanel(new GridLayout(2,2,10,10));
+		
+		String[] waitersAvailable = dk.getListOfWaiters();
+		JComboBox waiterList = new JComboBox(waitersAvailable);
+		waiterList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cb = (JComboBox)e.getSource();
+			}
+		});
+		
+		final JRadioButton buttonOne = new JRadioButton("1");
+			buttonOne.setSelected(true);
+		final JRadioButton buttonTwo = new JRadioButton("2");
+		final JRadioButton buttonThree = new JRadioButton("3");
+		final JRadioButton buttonFour = new JRadioButton("4");
+		
+		ButtonGroup bGroup = new ButtonGroup();
+		bGroup.add(buttonOne);
+		bGroup.add(buttonTwo);
+		bGroup.add(buttonThree);
+		bGroup.add(buttonFour);
+		
+		JPanel radioPanel = new JPanel(new GridLayout(1,4));
+		radioPanel.add(new JLabel("Num seated:"));
+		radioPanel.add(buttonOne);
+		radioPanel.add(buttonTwo);
+		radioPanel.add(buttonThree);
+		radioPanel.add(buttonFour);
 		
 		JButton logoutButton = new JButton("Logout");
-		
 		logoutButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				logout();
@@ -109,10 +136,20 @@ public class HostUI extends JFrame{
 		
 		assignButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				assignTable();
+				if(!cb.getSelectedItem().equals("Select Waiter"))
+					if(buttonOne.isSelected())
+						assignTable((String)cb.getSelectedItem(), 1);
+					else if(buttonTwo.isSelected())
+						assignTable((String)cb.getSelectedItem(), 2);
+					else if(buttonThree.isSelected())
+						assignTable((String)cb.getSelectedItem(), 3);
+					else if(buttonFour.isSelected())
+						assignTable((String)cb.getSelectedItem(), 4);
 				}
 		});
 		
+		buttonPanel.add(waiterList);
+		buttonPanel.add(radioPanel);
 		buttonPanel.add(assignButton);
 		buttonPanel.add(logoutButton);
 		
@@ -130,17 +167,17 @@ public class HostUI extends JFrame{
 	 * sets the status of the table to unoccupied (green) which is then updated on the map of tables for the restaurant.
 	 * 
 	 */
-	public void assignTable(){
+	public void assignTable(String s, int n){
 		if(selectedButton.getBackground() == Color.green)
 		{
 			tableList = new DataKeeper().getTables();
-			selectedButton.setBackground(Color.yellow);
 			for(Table t : tableList){
-				if(t.getTableNumber() == tableNumber){
-					t.assignedTable();
+				if((t.getTableNumber() == tableNumber) && (!s.equals("No Waiter Assigned"))){
+					selectedButton.setBackground(Color.yellow);
+					t.assignedTable(s, n);
 				}
 			}
-			System.out.println("Table "+tableNumber+" is assigned");
+			System.out.println("Table " + tableNumber + " is assigned");
 		}
 	}
 	

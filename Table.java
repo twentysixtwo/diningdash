@@ -10,7 +10,7 @@ public class Table {
 	private int positionRow;
 	private int positionCol;
 	
-	Table(int tableNum, int maxSeated, Waiter w, int posR, int posC, int stat){
+	Table(int tableNum, int maxSeated, int posR, int posC, int stat){
 		tableNumber = tableNum;
 		maxSeat = maxSeated;
 		switch(stat){
@@ -19,7 +19,7 @@ public class Table {
 			case 2: {status = Color.red; break;}
 			default: {status = Color.red; break;}
 		}
-		tableWaiter = w;
+		tableWaiter = new Waiter("", 0);
 		tableBill = new Bill(tableWaiter, this);;
 		positionRow = posR;
 		positionCol = posC;
@@ -60,9 +60,10 @@ public class Table {
 		DataKeeper.updatesTableInDatabase(this);
 	}
 	
-	void assignedTable(){
+	void assignedTable(String s, int n){
 		status = Color.yellow;
-		numSeated = 4;
+		tableWaiter.setName(s);
+		numSeated = n;
 		DataKeeper.updatesTableInDatabase(this);
 	}
 	

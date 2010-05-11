@@ -6,6 +6,8 @@
 
 public class Waiter extends Account  {
 	
+	private String name;
+	
 /**
  * Tips for the day. Tips are added when each bill is placed into the database.
  */
@@ -76,5 +78,9 @@ public class Waiter extends Account  {
 	 */
 	public int dirtyTable(int tableNumber){
 		return 0;
+	}
+	
+	public void setName(String s){
+		name = s;
 	}
 }
