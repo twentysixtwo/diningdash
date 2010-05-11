@@ -105,6 +105,7 @@ public class MenuUI extends JFrame{
 		addOrderButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 					foodComment = commentField.getText();
+					if(foodComment.equals("Comments:")) foodComment = " ";
 					menuBill.addOrder(foodName, foodComment);
 					closeMenu();
 					WaiterUI.updateOrderView();
