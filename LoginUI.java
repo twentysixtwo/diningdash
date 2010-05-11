@@ -109,7 +109,8 @@ public class LoginUI extends JPanel{
 		System.out.println("Username: "+nameField.getText());
 		System.out.println("Password: "+passwordField.getText());
 		
-		int accType = RecordKeeper.login(nameField.getText(), passwordField.getText());
+		RecordKeeper rec=new RecordKeeper();
+		int accType = rec.login(nameField.getText(), passwordField.getText());
 		switch (accType){
 			case 1: {
 				System.out.println("Hello " + nameField.getText());
@@ -152,6 +153,19 @@ public class LoginUI extends JPanel{
 	}
 	
 	public static void main(String[] args) {
+		/*RecordKeeper rec=new RecordKeeper();
+		Account acc=new Waiter("bobbo",5);
+		acc.name="Bob";
+		acc.employeeID=1;
+		acc.startTime=0;
+		acc.endTime=1;
+		acc.day="05-11-2010";
+		acc.type=3;
+		rec.addUser(acc, "pass");
+		System.out.println("login result: "+rec.login("bobbo", "pass"));*/
+
+
+		
 		JFrame main = new JFrame("Login");
 		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		main.setSize(600,200);
