@@ -11,7 +11,7 @@ import java.util.concurrent.SynchronousQueue;
  */
 
 @SuppressWarnings("serial")
-public class WaiterUI extends JFrame implements Runnable{
+public class WaiterUI extends JFrame{
 
 	/**
 	 * Reference to the login screen that opened this WaiterUI
@@ -35,11 +35,6 @@ public class WaiterUI extends JFrame implements Runnable{
 	
 	String waiterName;
 	
-	// A flag as a stupid signal for the menu
-	boolean flag = false;
-	String foodName = null;
-	String foodComment = null;
-	
 	/**
 	 * This is the constructor for the BusboyUI class and is called whenever a new waiter window is needed. It generates the
 	 * window, and displays the up to date map of the restaurant, including the status of every table.
@@ -51,9 +46,7 @@ public class WaiterUI extends JFrame implements Runnable{
 		
 		opener.setVisible(false);
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-	}
-	
-	public void run(){
+
 		waiterName = new String("Waiter "+ waiterName);
 		
 		// Size of restaurant is determined by the TotalRows and TotalCols field in DataKeeper's restaurantMap
@@ -91,8 +84,8 @@ public class WaiterUI extends JFrame implements Runnable{
 								tableInfo.setText("<html>Table " + tableNumber + "<p>" + 
 													"Occupancy: " + seated);
 								tableInfo.setMinimumSize(new Dimension(100, 30));
-								updateOrderView();
 							}
+							updateOrderView(tableNumber);
 						}
 					});
 					
@@ -125,7 +118,6 @@ public class WaiterUI extends JFrame implements Runnable{
 		placeOrderButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				placeOrder();
-				updateOrderView();
 			}
 		});
 		
@@ -220,29 +212,17 @@ public class WaiterUI extends JFrame implements Runnable{
 			}
 		}
 		if( (b!= null) && (tableColor == Color.yellow)){
-			Thread t = new Thread(new MenuUI(this));
-			try {
-				synchronized (this) {
-					t.start();
-					this.wait();
-					System.out.println(foodName);
-				}
-			} catch (InterruptedException e) {
-				System.out.println("Error with the menu");
-			}
-			//while(flag == false);
-			if( (foodName != null)){
-				b.addOrder(foodName,foodComment);
-			}
-			flag = false;
+			MenuUI mui = new MenuUI(b);
 		}
 		else System.out.println("Order not placed");
+		updateOrderView(tableNumber);
 	}
 	
-	private void updateOrderView(){
+	private void updateOrderView(int tn){
+		int tnumber = tn;
 		Bill b = null;
 		for(Table t : tableList){
-			if(t.getTableNumber() == tableNumber){
+			if(t.getTableNumber() == tnumber){
 				b = t.getTableBill();
 			}
 		}

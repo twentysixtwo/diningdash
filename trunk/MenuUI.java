@@ -11,7 +11,7 @@ import java.util.LinkedList;
  */
 
 @SuppressWarnings("serial")
-public class MenuUI extends JFrame implements Runnable{
+public class MenuUI extends JFrame{
 
 	JPanel gridPanel;
 
@@ -19,18 +19,17 @@ public class MenuUI extends JFrame implements Runnable{
 	int MENU_COLUMNS;
 	JButton selectedButton;
 	
-	WaiterUI superMenu;
+	String foodName = null;
+	String foodComment = null;
+	
+	Bill menuBill;
 		
 	/**
 	 * This is the constructor for the MenuUI class and is called whenever a new menu window is needed.
 	 */
-	public MenuUI(WaiterUI w){
+	public MenuUI(Bill bi){
 		
-		superMenu = w;
-		
-	}
-	
-	public void run(){
+		menuBill = bi;
 		
 		//int size[] = DataKeeper.getSizeOfMenu();
 		
@@ -40,7 +39,6 @@ public class MenuUI extends JFrame implements Runnable{
 		gridPanel = new JPanel(new GridLayout(MENU_ROWS,MENU_COLUMNS));
 		
 		JButton menuButton = null;
-		JPanel menuPanel = new JPanel(new GridLayout(MENU_ROWS,MENU_COLUMNS,10,10));
 
 		int x;
 		int y;
@@ -60,11 +58,11 @@ public class MenuUI extends JFrame implements Runnable{
 						selectedButton = (JButton)e.getSource();
 						if (selectedButton.getBackground() == Color.gray){
 							selectedButton.setBackground(Color.yellow);
-							superMenu.foodName = selectedButton.getText();
+							foodName = selectedButton.getText();
 						}
 						else if(selectedButton.getBackground() == Color.yellow){
 							selectedButton.setBackground(Color.gray);
-							superMenu.foodName = null;
+							foodName = null;
 						}
 					}
 				});
@@ -81,12 +79,9 @@ public class MenuUI extends JFrame implements Runnable{
 		JButton addOrderButton = new JButton("Add Order");
 		addOrderButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				synchronized(this){
-					superMenu.foodComment = commentField.getText();
+					foodComment = commentField.getText();
+					menuBill.addOrder(foodName, foodComment);
 					closeMenu();
-					this.notifyAll();
-					superMenu.flag = true;
-				}
 			}
 		});
 		gridPanel.add(addOrderButton);
@@ -94,13 +89,7 @@ public class MenuUI extends JFrame implements Runnable{
 		JButton closeButton = new JButton("Cancel");
 		closeButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				synchronized(this){
-					superMenu.foodName = null;
-					superMenu.foodComment = null;
 					closeMenu();
-					this.notifyAll();
-					superMenu.flag = true;
-				}
 			}
 		});
 		gridPanel.add(closeButton);
