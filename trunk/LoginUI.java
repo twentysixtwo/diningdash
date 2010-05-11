@@ -114,18 +114,24 @@ public class LoginUI extends JPanel{
 			case 1: {
 				System.out.println("Hello " + nameField.getText());
 				System.out.println("Password verified");
+				nameField.setText("");
+				passwordField.setText("");
 				BusboyUI busboyWindow = new BusboyUI(this,nameField.getText());
 				break;
 			}
 			case 2: {
 				System.out.println("Hello " + nameField.getText());
 				System.out.println("Password verified");
+				nameField.setText("");
+				passwordField.setText("");
 				break;
 			}
 			case 3:{
 				System.out.println("Hello " + nameField.getText());
 				System.out.println("Password verified");
 				WaiterUI wui = new WaiterUI(this, nameField.getText());
+				nameField.setText("");
+				passwordField.setText("");
 				break;
 			}
 			default: {
