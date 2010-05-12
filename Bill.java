@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 import java.util.LinkedList;
 
 /**
@@ -68,9 +69,11 @@ public class Bill {
 	 * @param name The name of the food being added to the bill
 	 * @param comment Any comment regarding the order being place
 	 */
-	public void addOrder(String name, String comment){
-		Order o = new Order(name, comment, this);
-		tab += o.getPrice();
+	public void addOrder(String name, String comment, String value){
+		DecimalFormat twoPlaces = new DecimalFormat("#.##");
+		Double v = Double.valueOf(twoPlaces.format(Double.parseDouble(value)));
+		Order o = new Order(name, comment, this, v);
+		tab += Double.parseDouble(value);
 		try{
 			orders.add(o);
 			//DataKeeper.globalKitchen.addToQueue(o);
@@ -89,8 +92,8 @@ public class Bill {
 	 * @return Returns false if it is not in the global queue. Returns false if it 
 	 * cannot find it in the order. Returns true if it removes from both the global queue and the order.
 	 */
-	public boolean removeOrder(String name, String comment){
-		Order o = new Order(name, comment, this);
+	public boolean removeOrder(String name, String comment, double p){
+		Order o = new Order(name, comment, this, p);
 		if(DataKeeper.globalKitchen.searchAndRemoveGlobalQueue(o) == false)
 			return false;
 		tab -= o.getPrice();

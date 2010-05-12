@@ -1,3 +1,5 @@
+import java.text.DecimalFormat;
+
 /**
  * This class contains all the information regarding specific food orders.
  * 
@@ -49,13 +51,12 @@ public class Order {
 	 */
 	private long finishedTime;
 		
-	public Order(String name, String com, Bill b){
+	public Order(String name, String com, Bill b, double p){
 		foodName = name;
 		comments = com;
 		//itsBill = b;
 		status = false;
-		//Need to add some database queries here to set price
-		price = 0.00;
+		price = p;
 	}
 	
 	/**
@@ -69,6 +70,15 @@ public class Order {
 	 * @return The price of the order as a double
 	 */
 	public double getPrice(){return price;}
+	
+	/**
+	 * Gets the price of the order as a string
+	 * @return The price of the order as a double
+	 */
+	public String getPriceAsString(){
+		DecimalFormat twoPlaces = new DecimalFormat("#.##");
+		return Double.valueOf(twoPlaces.format(price)).toString();
+	}
 	
 	/**
 	 * Gets the comment associated with the order
