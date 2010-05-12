@@ -659,7 +659,8 @@ public class RecordKeeper {
 			ResultSet rs= s.getResultSet();
 			while (rs.next())
 			{
-				foodOnMenu.add(rs.getString(1));
+				String foodAndPrice = "<html>" + rs.getString(1)+ "<p>$" + rs.getString(2); 
+				foodOnMenu.add(foodAndPrice);
 			}
 		}catch (Exception e) {}
 		
