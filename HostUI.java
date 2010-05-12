@@ -1,12 +1,11 @@
 import javax.swing.*;
-
 import java.awt.event.*;
 import java.awt.*;
-import java.io.IOException;
 import java.util.LinkedList;
 
 /** 
- * This is the UI for the Host accounts
+ * This is the UI for the Host accounts. It allows the hosts to assign
+ * tables to specific waiters and set their status accordingly.
  * 
  * @author Henry Chao
  */
@@ -18,8 +17,8 @@ public class HostUI extends JFrame{
 	LoginUI opener;
 	
 	JPanel gridPanel;
-	
 	JButton selectedButton;
+	JComboBox cb = new JComboBox();
 	
 	int x;
 	int y;
@@ -27,12 +26,10 @@ public class HostUI extends JFrame{
 	int MAX_ROWS;
 	int MAX_COLUMNS;
 	
-	int tableNumber;
 	LinkedList<Table> tableList;
 	DataKeeper dk = new DataKeeper();
 	
-	JComboBox cb = new JComboBox();
-	
+	int tableNumber;
 	String hostName;
 	
 	/**
@@ -59,7 +56,7 @@ public class HostUI extends JFrame{
 		JButton tableButton;
 		tableNumber = 1;
 		
-		tableList = new DataKeeper().getTables();
+		tableList = dk.getTables();
 		Table t = tableList.pop();
 			
 		for(y=0;y<MAX_ROWS;y++)
@@ -162,10 +159,10 @@ public class HostUI extends JFrame{
 	}
 	
 	/**
-	 * This method is called whenever a busboy clicks on a dirty table. The status of the table is first checked in the
-	 * actionListener for when a busboy clicks on a table. This method calls a method in the Busboy Account class that
-	 * sets the status of the table to unoccupied (green) which is then updated on the map of tables for the restaurant.
-	 * 
+	 * This method is called whenever a host clicks on an empty table. The status of the table is first checked in the
+	 * actionListener for when a host clicks on a table. This method calls another method function to mark a table as
+	 * occupied. It passes two values; the name of the waiter assigned to the table and the number of people sitting
+	 * at the table. If successful, the table color will change to yellow. 
 	 */
 	public void assignTable(String s, int n){
 		if(selectedButton.getBackground() == Color.green)
@@ -182,7 +179,7 @@ public class HostUI extends JFrame{
 	}
 	
 	/**
-	 * This method is called whenever a busboy clicks on the logout button. It will close the BusboyUI window, and bring back
+	 * This method is called whenever a host clicks on the logout button. It will close the HostUI window, and bring back
 	 * the login window.
 	 */
 	public void logout(){

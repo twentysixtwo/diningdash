@@ -1,16 +1,14 @@
 import javax.swing.*;
-
 import java.awt.event.*;
 import java.awt.*;
 import java.util.LinkedList;
 
 /**
- * MenuUI is the user interface for the food menu.
+ * MenuUI is the user interface for the food menu. Every time a waiter places an order,
+ * the MenuUI will show up to display a grid of the available food items in the restaurant.
  * @author Henry Chao
- *
  */
 
-@SuppressWarnings("serial")
 public class MenuUI extends JFrame{
 
 	JPanel gridPanel;
@@ -81,7 +79,6 @@ public class MenuUI extends JFrame{
 		final JTextField commentField = new JTextField();
 		commentField.setText("Comments:");
 		commentField.addFocusListener(new FocusListener(){
-
 			public void focusGained(FocusEvent arg0) {
 				if(commentField.isFocusOwner()){
 					System.out.println(commentField.getText());
@@ -89,7 +86,6 @@ public class MenuUI extends JFrame{
 						commentField.setText(" ");
 				}
 			}
-
 			public void focusLost(FocusEvent arg0) {
 			}
 			
@@ -125,8 +121,8 @@ public class MenuUI extends JFrame{
 	
 	
 	/**
-	 * This method is called whenever a waiter clicks on the logout button. It will close the WaiterUI window, and bring back
-	 * the login window.
+	 * This method is called whenever a waiter clicks on the close button. It will close the MenuUI window, and bring back
+	 * the WaiterUI window.
 	 */
 	public void closeMenu(){
 		this.dispose();

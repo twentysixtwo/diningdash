@@ -4,12 +4,13 @@ import java.awt.*;
 import java.util.LinkedList;
 
 /**
- * WaiterUI is the user interface for the waiter.
+ * WaiterUI is the user interface for the waiter. It allows the waiter to add
+ * orders to the bill of a table. It also allows the waiter to set the table
+ * as dirty when the patrons leave. In case of user errors, the status of the
+ * table can be toggled between occupied and dirty.
  * @author Henry Chao
- *
  */
 
-@SuppressWarnings("serial")
 public class WaiterUI extends JFrame{
 
 	/**
@@ -18,8 +19,9 @@ public class WaiterUI extends JFrame{
 	LoginUI opener;
 	
 	JPanel gridPanel;
-	
 	JButton selectedButton;
+	final static JTextArea tableOrder = new JTextArea(20, 25);
+	final static JLabel tabLabel = new JLabel("Total Price: ");
 	
 	int x;
 	int y;
@@ -29,9 +31,6 @@ public class WaiterUI extends JFrame{
 	
 	static int tableNumber;
 	
-	final static JTextArea tableOrder = new JTextArea(20, 25);
-	final static JLabel tabLabel = new JLabel("Total Price: ");
-	
 	String waiterName;
 	static String infoText = new String();
 	static Bill tableBill = null;
@@ -39,8 +38,9 @@ public class WaiterUI extends JFrame{
 	static LinkedList<Table> tableList;
 	
 	/**
-	 * This is the constructor for the BusboyUI class and is called whenever a new waiter window is needed. It generates the
-	 * window, and displays the up to date map of the restaurant, including the status of every table.
+	 * This is the constructor for the WaiterUI class and is called whenever a 
+	 * new waiter window is needed. It generates the window, and displays the 
+	 * up to date map of the restaurant, including the status of every table.
 	 */
 	public WaiterUI(LoginUI loginWindow,String name){
 		super("Waiter");
@@ -95,7 +95,6 @@ public class WaiterUI extends JFrame{
 									wName = t.getName();
 								}
 							}
-							
 							if(selectedButton.getBackground() != Color.gray)
 							{
 								tableNumber = Integer.parseInt(selectedButton.getText());
@@ -114,8 +113,7 @@ public class WaiterUI extends JFrame{
 				else{
 					tableButton = new JButton();
 					tableButton.setBackground(Color.gray);
-				}
-			;
+				};
 				
 				tableNumber++;
 				
@@ -206,6 +204,10 @@ public class WaiterUI extends JFrame{
 		this.dispose();
 	}
 	
+	/**
+	 * This method will toggle the status of the table between occupied (yellow)
+	 * and dirty (red).
+	 */
 	private void toggleDirty(){
 		if(selectedButton.getBackground() == Color.yellow){
 			selectedButton.setBackground(Color.red);
@@ -227,6 +229,10 @@ public class WaiterUI extends JFrame{
 		}
 	}
 	
+	/**
+	 * This method will place an order for the table. It calls a new instance
+	 * of a MenuUI and passes the bill to the UI so that a new order can be added.
+	 */
 	private void placeOrder(){
 		Bill b = null;
 		Color tableColor = null;
@@ -243,6 +249,9 @@ public class WaiterUI extends JFrame{
 		else System.out.println("Order not placed");
 	}
 	
+	/**
+	 * Updates the UI to show the bill of the table in the WaiterUI.
+	 */
 	static void updateOrderView(){
 		for(Table t : tableList){
 			if(t.getTableNumber() == tableNumber){

@@ -140,42 +140,12 @@ public class LoginUI extends JPanel{
 			}
 			
 		}
-		
-		/*
-		if(RecordKeeper.checkUsername(nameField.getText()))
-		{
-			System.out.println("Hello " + nameField.getText());
-			
-			if(RecordKeeper.checkPassword(passwordField.getText()))
-			{
-				System.out.println("Password verified");
-				BusboyUI busboyWindow = new BusboyUI(this,nameField.getText());
-				
-				nameField.setText("");
-				passwordField.setText("");
-			}
-		}
-		*/
 	}
 	
 	public static void main(String[] args) {
-		/*RecordKeeper rec=new RecordKeeper();
-		Account acc=new Waiter("bobbo",5);
-		acc.name="Bob";
-		acc.employeeID=1;
-		acc.startTime=0;
-		acc.endTime=1;
-		acc.day="05-11-2010";
-		acc.type=3;
-		rec.addUser(acc, "pass");
-		System.out.println("login result: "+rec.login("bobbo", "pass"));*/
-
-
-		
 		JFrame main = new JFrame("Login");
 		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		main.setSize(600,200);
-		//main.setResizable(false);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		main.setLocation(dim.width/2-140,dim.height/2-85);
 		

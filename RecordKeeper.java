@@ -29,8 +29,6 @@ public class RecordKeeper {
 		connectToDatabase();
 	}
 	
-	
-	
 	/**
 	 * Connects to the database file
 	 */
@@ -354,22 +352,14 @@ public class RecordKeeper {
 			Statement s = con.createStatement();
 			s.execute("select Price from Food where Name='"+foodName+"'");
 			rs=s.getResultSet();
-			if (rs.next()==true)
-			{
+			if (rs.next()==true){
 				return rs.getDouble(1);
 			}
-			else
-			{
-				return 0;
-
-			}
-			
+			else {return 0;}
 		}
 		catch (Exception e) {System.out.println("exception: "+e);}
 		return 0;
 	}
-	
-
 
 	/**
 	 * Returns the percentage of the total amount of food items ordered
@@ -401,20 +391,6 @@ public class RecordKeeper {
 		return popularity;
 	}
 
-	
-	/*
-	 * This method is no longer necessary 
-	/**
-	 * Returns a list of all employees that have worked in the restaurant
-	 * 
-	 * @return List of Accounts
-	 
-	List<Account> listEmployees(){
-		List<Account> data=new LinkedList<Account>();
-		return data;
-	}
-	*/
-	
 	/**
 	 * Returns a list of all employees that have worked in the restaurant
 	 * on a specified date
@@ -433,7 +409,6 @@ public class RecordKeeper {
 	 * @param username  Username of the employee
 	 * @return The Account to be returned
 	 */
-	
 	Account accountData(String username){
 		//Account temp= new Account();
 		//TODO Write a method to search for accounts and return its type
@@ -479,16 +454,10 @@ public class RecordKeeper {
 			Statement s = con.createStatement();
 			s.execute("select Type from Accounts where Username='"+username+"' and Password='"+password+"'");
 			rs=s.getResultSet();
-			if (rs.next()==true)
-			{
+			if (rs.next()==true){
 				return rs.getInt(1);
 			}
-			else
-			{
-				return 0;
-
-			}
-			
+			else {return 0;}
 		}
 		catch (Exception e) {System.out.println("exception: "+e);};
 		return 0;
@@ -578,24 +547,12 @@ public class RecordKeeper {
 		// TODO Auto-generated method stub
 	}
 	
-	
-	/* Just use login()
-	public static boolean checkUsername(String s){
-		// Insert an if statement to query the database for the user name. Return true if it is found.
-		return true;
-		
-	}
-	
-	public static boolean checkPassword(String s){
-		//Insert an if statement to query the database for the password. Return true if it is found.
-		return true;
-	}*/
-	
+	/**
+	 * Queries the database by the table number of t. Then updates the record 
+	 * in the database with the new t.
+	 * @param t The table to update in the database.
+	 */
 	public void updatesTable(Table t){
-		/*
-		 * Queries the database by the table number of t. Then updates the record in the database with
-		 * the new t.
-		 */
 		ResultSet rs;
 		try {
 			Statement s = con.createStatement();
@@ -630,11 +587,11 @@ public class RecordKeeper {
 	
 	
 	
-	
+	/**
+	 * Queries the database to get the size of the menu.
+	 * @return Return row then column in an array.
+	 */
 	public int[] getMenuSize(){
-		/*
-		 * Queries the database to get the size of the menu. Return row then column in an array
-		 */
 		int count=0;
 		try {
 			Statement s=con.createStatement();
@@ -651,6 +608,11 @@ public class RecordKeeper {
 		return ret;
 	}
 	
+	/**
+	 * Queries the database to get all the food items in the menu.
+	 * @return A linked list of strings containing all the food items
+	 * in the menu and their prices.
+	 */
 	public LinkedList<String> getMenuItems(){
 		LinkedList<String> foodOnMenu = new LinkedList<String>();
 		try {
@@ -667,8 +629,10 @@ public class RecordKeeper {
 		return foodOnMenu;
 	}
 
-
-
+	/**
+	 * Queries the database to get the name of all the waiters in the database.
+	 * @return A string array to be used by the JComboBox in the WaiterUI
+	 */
 	public String[] getWaiterList() {
 		String[] str = new String[10];
 		str[0] = "Select Waiter";

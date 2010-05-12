@@ -8,14 +8,14 @@ public class Waiter extends Account  {
 	
 	private String name;
 	
-/**
- * Tips for the day. Tips are added when each bill is placed into the database.
- */
+	/**
+	 * Tips for the day. Tips are added when each bill is placed into the database.
+	 */
 	private float tips;
 	
-/**
- * Bill for the currently selected table.
- */
+	/**
+	 * Bill for the currently selected table.
+	 */
 	//private Bill currentBill;
 	
 	public Waiter(String named, float pay) {

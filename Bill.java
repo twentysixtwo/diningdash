@@ -3,8 +3,7 @@ import java.util.LinkedList;
 
 /**
  * The bill class contains a linked list of orders. It is the bill associated with a table.
- * @author Henry
- *
+ * @author Henry Chao
  */
 
 public class Bill {
@@ -140,10 +139,18 @@ public class Bill {
 	 */
 	public long getEndTime(){return endTime;}
 	
+	/**
+	 * Gets a linked list of orders.
+	 * @return A linked list of orders
+	 */
 	public LinkedList<Order> getOrders(){
 		return orders;
 	}
 	
+	/**
+	 * Gets the tab of the bill.
+	 * @return The tab as a double number.
+	 */
 	public double getTab(){return tab;}
 		
 }
