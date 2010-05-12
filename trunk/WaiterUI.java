@@ -81,6 +81,7 @@ public class WaiterUI extends JFrame{
 					
 					tableButton.addActionListener(new ActionListener(){
 						public void actionPerformed(ActionEvent e){
+							updateOrderView();
 							selectedButton = (JButton)e.getSource();
 							int seated = 0;
 							String wName = new String();
