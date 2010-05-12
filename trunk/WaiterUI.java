@@ -82,9 +82,11 @@ public class WaiterUI extends JFrame{
 					tableButton.setBackground(t.getStatus());
 					
 					tableButton.addActionListener(new ActionListener(){
+						
 						public void actionPerformed(ActionEvent e){
 							updateOrderView();
 							selectedButton = (JButton)e.getSource();
+							
 							int seated = 0;
 							String wName = new String();
 							
@@ -194,7 +196,6 @@ public class WaiterUI extends JFrame{
 		setVisible(true);
 	}
 	
-	
 	/**
 	 * This method is called whenever a waiter clicks on the logout button. It will close the WaiterUI window, and bring back
 	 * the login window.
@@ -208,7 +209,7 @@ public class WaiterUI extends JFrame{
 	 * This method will toggle the status of the table between occupied (yellow)
 	 * and dirty (red).
 	 */
-	private void toggleDirty(){
+	public String toggleDirty(){
 		if(selectedButton.getBackground() == Color.yellow){
 			selectedButton.setBackground(Color.red);
 			System.out.println("Table "+tableNumber+" is dirty");
@@ -217,6 +218,7 @@ public class WaiterUI extends JFrame{
 					t.setStatus(Color.red);
 				}
 			}
+			return "Dirty";
 		}
 		else if(selectedButton.getBackground() == Color.red){
 			selectedButton.setBackground(Color.yellow);
@@ -226,16 +228,20 @@ public class WaiterUI extends JFrame{
 					t.setStatus(Color.yellow);
 				}
 			}
+			return "Occupied";
 		}
+		return "?";
 	}
 	
 	/**
 	 * This method will place an order for the table. It calls a new instance
 	 * of a MenuUI and passes the bill to the UI so that a new order can be added.
 	 */
-	private void placeOrder(){
-		Bill b = null;
-		Color tableColor = null;
+	Color tableColor = null;
+	Bill b = null;
+	public String placeOrder(){
+		//Bill b = null;
+		//Color tableColor = null;
 		
 		for(Table t : tableList){
 			if(t.getTableNumber() == tableNumber){
@@ -245,14 +251,15 @@ public class WaiterUI extends JFrame{
 		}
 		if( (b!= null) && (tableColor == Color.yellow)){
 			MenuUI mui = new MenuUI(b);
+			return "Menu loaded";
 		}
-		else System.out.println("Order not placed");
+		else return("Order not placed");
 	}
 	
 	/**
 	 * Updates the UI to show the bill of the table in the WaiterUI.
 	 */
-	static void updateOrderView(){
+	static String updateOrderView(){
 		for(Table t : tableList){
 			if(t.getTableNumber() == tableNumber){
 				tableBill = t.getTableBill();
@@ -262,6 +269,7 @@ public class WaiterUI extends JFrame{
 		LinkedList<Order> foodOrders = tableBill.getOrders();
 		if(foodOrders.size() == 0){
 			tableOrder.setText(null);
+			return "Order updated1";
 		}
 		else{
 			infoText = new String();
@@ -273,6 +281,7 @@ public class WaiterUI extends JFrame{
 					tabLabel.setText("Total Price: $" + totalTab + "0");
 				}
 			}
+			return "Order updated2";
 		}
 	}
 }

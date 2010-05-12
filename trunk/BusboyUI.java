@@ -137,10 +137,9 @@ public class BusboyUI extends JFrame{
 			for(Table t : tableList){
 				if(t.getTableNumber() == tableNumber){
 					t.cleanedTable();
+					return ("Table "+tableNumber+" is clean");
 				}
 			}
-			
-			return ("Table "+tableNumber+" is clean");
 		}
 		return ("Table "+tableNumber+" is not clean");
 	}
