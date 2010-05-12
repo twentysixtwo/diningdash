@@ -33,7 +33,7 @@ public class HostUI extends JFrame{
 	String hostName;
 	
 	/**
-	 * This is the constructor for the BusboyUI class and is called whenever a new busboy window is needed. It generates the
+	 * This is the constructor for the HostUI class and is called whenever a new host window is needed. It generates the
 	 * window, and displays the up to date map of the restaurant, including the status of every table.
 	 */
 	public HostUI(LoginUI loginWindow,String name){
@@ -68,14 +68,15 @@ public class HostUI extends JFrame{
 					tableButton.setBackground(t.getStatus());
 					
 					tableButton.addActionListener(new ActionListener(){
-						public void actionPerformed(ActionEvent e){
+						public void actionPerformed(ActionEvent e)
+						{
 							selectedButton = (JButton)e.getSource();
 							if(selectedButton.getBackground() != Color.gray)
 							{
 								tableNumber = Integer.parseInt(selectedButton.getText());
 								System.out.println("Table number is "+tableNumber);
 							}
-							}
+						}
 					});
 					
 					try {t = tableList.pop();}
@@ -164,7 +165,7 @@ public class HostUI extends JFrame{
 	 * occupied. It passes two values; the name of the waiter assigned to the table and the number of people sitting
 	 * at the table. If successful, the table color will change to yellow. 
 	 */
-	public void assignTable(String s, int n){
+	public String assignTable(String s, int n){
 		if(selectedButton.getBackground() == Color.green)
 		{
 			tableList = new DataKeeper().getTables();
@@ -172,10 +173,12 @@ public class HostUI extends JFrame{
 				if((t.getTableNumber() == tableNumber) && (!s.equals("No Waiter Assigned"))){
 					selectedButton.setBackground(Color.yellow);
 					t.assignedTable(s, n);
+					return "Table assigned";
 				}
 			}
-			System.out.println("Table " + tableNumber + " is assigned");
+			//System.out.println("Table " + tableNumber + " is assigned");
 		}
+		return "Table not assigned";
 	}
 	
 	/**

@@ -46,7 +46,6 @@ public class RecordKeeper {
         }
 	}
 	
-
 	/**
 	 * Adds the data in the Bill object to the database
 	 * 

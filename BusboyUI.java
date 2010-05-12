@@ -105,6 +105,7 @@ public class BusboyUI extends JFrame{
 		});
 		
 		JButton clearButton = new JButton("Clear Table");
+		clearButton.setName("Clear Table");
 		clearButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				cleanTable();
@@ -128,18 +129,20 @@ public class BusboyUI extends JFrame{
 	 * sets the status of the table to unoccupied (green) which is then updated on the map of tables for the restaurant.
 	 * 
 	 */
-	public void cleanTable(){
+	public String cleanTable(){
 		if(selectedButton.getBackground() == Color.red)
 		{
 			tableList = new DataKeeper().getTables();
 			selectedButton.setBackground(Color.green);
-			System.out.println("Table "+tableNumber+" is clean");
 			for(Table t : tableList){
 				if(t.getTableNumber() == tableNumber){
 					t.cleanedTable();
 				}
 			}
+			
+			return ("Table "+tableNumber+" is clean");
 		}
+		return ("Table "+tableNumber+" is not clean");
 	}
 	
 	/**
