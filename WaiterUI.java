@@ -78,15 +78,18 @@ public class WaiterUI extends JFrame{
 				if( (t.getPosRow() == y) && (t.getPosCol() == x)){
 					tableButton = new JButton((t.getTableNumber()).toString());
 					tableButton.setBackground(t.getStatus());
-					final int seated = t.getNumSeat();
 					
 					tableButton.addActionListener(new ActionListener(){
 						public void actionPerformed(ActionEvent e){
 							selectedButton = (JButton)e.getSource();
+							int seated = 0;
+							String wName = new String();
 							
 							for(Table t : tableList){
 								if(t.getTableNumber() == tableNumber){
 									tableBill = t.getTableBill();
+									seated = t.getNumSeat();
+									wName = t.getName();
 								}
 							}
 							
@@ -94,9 +97,9 @@ public class WaiterUI extends JFrame{
 							{
 								tableNumber = Integer.parseInt(selectedButton.getText());
 								System.out.println("Table number is " + tableNumber);
-								tableInfo.setText("<html>Table " + tableNumber + "<p>" + 
+								tableInfo.setText("<html>Table " + tableNumber + " Waiter :" + wName + "<p>" +
 													"Occupancy: " + seated);
-								tableInfo.setMinimumSize(new Dimension(100, 30));
+								tableInfo.setMinimumSize(new Dimension(200, 30));
 							}
 							updateOrderView();
 						}
