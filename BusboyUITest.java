@@ -36,7 +36,6 @@ public class BusboyUITest extends TestCase{
 	public void testCleanNoNumber(){
 		test.selectedButton = new JButton();
 		test.selectedButton.setBackground(Color.red);
-		//test.tableNumber;
 		assertEquals(test.cleanTable(),"Table "+test.tableNumber+" is not clean");
 		assertEquals(test.selectedButton.getBackground(),Color.green);
 	}

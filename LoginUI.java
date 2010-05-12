@@ -91,7 +91,6 @@ public class LoginUI extends JPanel{
 		});
 		
 		add(loginButton,gbc);
-			
 	}
 	
 	/**
@@ -116,7 +115,7 @@ public class LoginUI extends JPanel{
 				System.out.println("Password verified");
 				nameField.setText("");
 				passwordField.setText("");
-				BusboyUI busboyWindow = new BusboyUI(this,nameField.getText());
+				BusboyUI bui = new BusboyUI(this,nameField.getText());
 				break;
 			}
 			case 2: {
