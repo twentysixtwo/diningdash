@@ -249,7 +249,8 @@ public class WaiterUI extends JFrame{
 			infoText = new String();
 			for(Order o:foodOrders){
 				if(o.getFoodName() != null){
-					infoText = infoText + o.getFoodName() + '\n' + '\t' + o.getComment() + '\n';
+					infoText = infoText + o.getFoodName() + '\n' + '\t' + 
+								o.getComment() + '\n' + '\t' + "$" + o.getPriceAsString()+"0" + '\n';
 					tableOrder.setText(infoText);
 				}
 			}

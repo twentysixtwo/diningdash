@@ -101,7 +101,8 @@ public class MenuUI extends JFrame{
 			public void actionPerformed(ActionEvent e){
 					foodComment = commentField.getText();
 					if(foodComment.equals("Comments:")) foodComment = " ";
-					menuBill.addOrder(foodName, foodComment);
+					String[] foodString = foodName.split("<html>|<p>|$");
+					menuBill.addOrder(foodString[1], foodComment, foodString[2].substring(1));
 					closeMenu();
 					WaiterUI.updateOrderView();
 			}
