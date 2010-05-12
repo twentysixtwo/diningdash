@@ -30,10 +30,12 @@ public class WaiterUI extends JFrame{
 	static int tableNumber;
 	
 	final static JTextArea tableOrder = new JTextArea(20, 25);
+	final static JLabel tabLabel = new JLabel("Total Price: ");
 	
 	String waiterName;
 	static String infoText = new String();
 	static Bill tableBill = null;
+	static double totalTab = 0;
 	static LinkedList<Table> tableList;
 	
 	/**
@@ -167,15 +169,21 @@ public class WaiterUI extends JFrame{
 		scrollPane.setMinimumSize(new Dimension(250, 250));
 		infoPanel.add(scrollPane, orderC);
 		
+		GridBagConstraints tabC = new GridBagConstraints();
+			tabC.gridx = 0;
+			tabC.gridy = 2;
+			tabC.gridwidth = 2;
+		infoPanel.add(tabLabel, tabC);
+		
 		GridBagConstraints placeOrderC = new GridBagConstraints();
 			placeOrderC.gridx = 0;
-			placeOrderC.gridy = 2;
+			placeOrderC.gridy = 3;
 			placeOrderC.gridwidth = 1;
 		infoPanel.add(placeOrderButton, placeOrderC);
 		
 		GridBagConstraints dirtyButtonC = new GridBagConstraints();
 			dirtyButtonC.gridx = 1;
-			dirtyButtonC.gridy = 2;
+			dirtyButtonC.gridy = 3;
 			dirtyButtonC.gridwidth = 1;
 		infoPanel.add(setDirtyButton, dirtyButtonC);
 		
@@ -239,6 +247,7 @@ public class WaiterUI extends JFrame{
 		for(Table t : tableList){
 			if(t.getTableNumber() == tableNumber){
 				tableBill = t.getTableBill();
+				totalTab = tableBill.getTab();
 			}
 		}
 		LinkedList<Order> foodOrders = tableBill.getOrders();
@@ -252,6 +261,7 @@ public class WaiterUI extends JFrame{
 					infoText = infoText + o.getFoodName() + '\n' + '\t' + 
 								o.getComment() + '\n' + '\t' + "$" + o.getPriceAsString()+"0" + '\n';
 					tableOrder.setText(infoText);
+					tabLabel.setText("Total Price: $" + totalTab + "0");
 				}
 			}
 		}

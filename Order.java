@@ -100,5 +100,4 @@ public class Order {
 	 * and false indicating the order is not done
 	 */
 	public boolean getStatus(){return status;}
-
 }

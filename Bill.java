@@ -143,5 +143,7 @@ public class Bill {
 	public LinkedList<Order> getOrders(){
 		return orders;
 	}
+	
+	public double getTab(){return tab;}
 		
 }
