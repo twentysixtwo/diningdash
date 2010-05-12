@@ -24,7 +24,6 @@ public class Order {
 	 * Once the cook makes the order and is ready to give to the customer, the status
 	 * is set to 1.
 	 */
-	
 	private boolean status;
 	
 	/**
@@ -39,18 +38,17 @@ public class Order {
 	private Bill itsBill;
 	
 	/**
+	 * The time the food is cooked.
+	 */
+	private long finishedTime;
+	
+	/**
 	 * Default constructor of the class
 	 * 
 	 * By default, will set the status of the dish to not ready, or 0
 	 * @param name The name of the dish
 	 * @param com The comments regarding the order
 	 */
-	
-	/**
-	 * The time the food is cooked.
-	 */
-	private long finishedTime;
-		
 	public Order(String name, String com, Bill b, double p){
 		foodName = name;
 		comments = com;

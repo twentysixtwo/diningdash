@@ -1,8 +1,6 @@
 import javax.swing.*;
-
 import java.awt.event.*;
 import java.awt.*;
-import java.io.IOException;
 import java.util.LinkedList;
 
 /** 
@@ -21,7 +19,6 @@ public class BusboyUI extends JFrame{
 	LoginUI opener;
 	
 	JPanel gridPanel;
-	
 	JButton selectedButton;
 	
 	int x;
@@ -101,7 +98,6 @@ public class BusboyUI extends JFrame{
 		JPanel buttonPanel = new JPanel(new GridLayout(1,2,10,10));
 		
 		JButton logoutButton = new JButton("Logout");
-		
 		logoutButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				logout();
@@ -109,7 +105,6 @@ public class BusboyUI extends JFrame{
 		});
 		
 		JButton clearButton = new JButton("Clear Table");
-		
 		clearButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				cleanTable();
