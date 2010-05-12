@@ -20,6 +20,7 @@ public class Waiter extends Account  {
 	
 	public Waiter(String named, float pay) {
 		super(named, pay);
+		name = named;
 	}
 	
 	/**
@@ -82,5 +83,9 @@ public class Waiter extends Account  {
 	
 	public void setName(String s){
 		name = s;
+	}
+	
+	public String getName(){
+		return name;
 	}
 }

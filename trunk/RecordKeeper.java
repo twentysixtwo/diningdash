@@ -512,7 +512,7 @@ public class RecordKeeper {
 			rs=s.getResultSet();
 			while (rs.next() == true)
 			{
-				Table t = new Table(rs.getInt(1), 4, rs.getInt(2), rs.getInt(3), rs.getInt(4));
+				Table t = new Table(rs.getInt(1), 4, rs.getString(6), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getInt(5));
 				tableList.add(t);
 			}
 		}
@@ -606,6 +606,10 @@ public class RecordKeeper {
 				s.executeUpdate("update Map set Row="+t.getPosRow()+ " where TableNumber="+t.getTableNumber()+"");
 				s.execute("select * from Map where TableNumber=-1");
 				s.executeUpdate("update Map set Col="+t.getPosCol()+ " where TableNumber="+t.getTableNumber()+"");
+				s.execute("select * from Map where TableNumber=-1");
+				s.executeUpdate("update Map set Seated="+t.getNumSeat()+ " where TableNumber="+t.getTableNumber()+"");
+				s.execute("select * from Map where TableNumber=-1");
+				s.executeUpdate("update Map set WaiterName='"+t.getName()+ "' where TableNumber="+t.getTableNumber()+"");
 				s.execute("select * from Map where TableNumber=-1");
 				if(t.getStatus() == Color.green){
 					s.executeUpdate("update Map set Status="+ 0 + " where TableNumber="+t.getTableNumber()+"");
